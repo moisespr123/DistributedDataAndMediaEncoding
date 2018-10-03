@@ -30,12 +30,18 @@ if (isset($_GET['f'])) {
             $filename = basename(pathinfo($row['filename'], PATHINFO_BASENAME), "." . pathinfo($row['filename'], PATHINFO_EXTENSION));
             if ($row['app'] == 'flac_encoder') {
                 $file_path = $flac_encoder_file_path . $row['random_token'];
+                rename($file_path, $flac_encoder_file_path . "downloaded/" . $row['random_token']);
+                $file_path = $flac_encoder_file_path . "downloaded/" . $row['random_token'];
                 $filename = $filename . ".flac";
             } else if ($row['app'] = 'opus_encoder') {
                 $file_path = $opus_encoder_file_path . $row['random_token'];
+                rename($file_path, $opus_encoder_file_path . "downloaded/" . $row['random_token']);
+                $file_path = $opus_encoder_file_path . "downloaded/" . $row['random_token'];
                 $filename = $filename . ".opus";
             } else {
                 $file_path = $other_file_path . $row['random_token'];
+                rename($file_path, $other_file_path . "downloaded/" . $row['random_token']);
+                $file_path = $other_file_path . "downloaded/" . $row['random_token'];
                 $filename = $filename . ".flac";
             }
             if (file_exists($file_path)) {
