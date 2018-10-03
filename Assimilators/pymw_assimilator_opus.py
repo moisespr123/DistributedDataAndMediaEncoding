@@ -55,7 +55,7 @@ class PymwAssimilator(Assimilator):
                 template_base_name = wu_basename[:-9]
                 os.remove(assimilator_config.templates_path + template_base_name + "_wu")
                 os.remove(assimilator_config.templates_path + template_base_name + "_result")
-                os.chmod(dest, 777)
+                os.chmod(dest, 0777)
                 conn = MySQLdb.connect(host=self.MySQLHost, db=self.MySQLDB, user=self.MySQLUsername, passwd=self.MySQLPassword)
                 cursor = conn.cursor()
                 cursor.execute("UPDATE user_media_files SET processed=1 WHERE random_token='%s'" % (wu_basename))
