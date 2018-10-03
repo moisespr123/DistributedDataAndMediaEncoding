@@ -1,0 +1,5 @@
+﻿For FLAC:
+boinc_weak_key flac -artist "%artist%" -title "%title%" -album "%albumtitle%" -year "%year%" -tn %tracknr1% -g %genre% -comm %comment% -aa %albuminterpret% -comp %composer% -cnd %cdnumber% -cdt %totalcds% -tt %numtracks% %hascover%-p "%coverfile%" %hascover% -s "%source%"
+
+For Opus:
+boinc_weak_key opus -b bitrate -artist "%artist%" -title "%title%" -album "%albumtitle%" -year "%year%" -tn %tracknr1% -g %genre% -comm %comment% %hascover%-p "%coverfile%" %hascover% -s "%source%"
