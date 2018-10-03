@@ -14,7 +14,8 @@ namespace submit_audio_file
             string tracknumber = "";
             string album = "";
             string source = "";
-            ;
+            string filename = "";
+           ;
             if (format == "flac")
             {
                 commandline = "--lax -l 32 -b 4096 -e -m -p -r 15 -A bartlett -A bartlett_hann -A blackman -A blackman_harris_4term_92db -A connes -A flattop -A gauss(0.5) -A hamming -A hann -A kaiser_bessel -A nuttall -A rectangle -A triangle -A tukey(0.5) -A partial_tukey(2) -A punchout_tukey(3) -A welch -V";
@@ -24,6 +25,7 @@ namespace submit_audio_file
                 tracknumber = parsed_args[2];
                 album = parsed_args[3];
                 source = parsed_args[4];
+                filename =  tracknumber + " - " + trackname + ".flac";
             }
             else if (format == "opus")
             {
@@ -34,8 +36,8 @@ namespace submit_audio_file
                 tracknumber = parsed_args[2];
                 album = parsed_args[3];
                 source = parsed_args[4];
+                filename = tracknumber + " - " + trackname + ".opus";
             }
-            string filename = tracknumber + " - " + trackname + ".flac";
             Console.WriteLine(commandline);
             if (File.Exists(source))
             {
