@@ -72,7 +72,7 @@ namespace submit_audio_file
                     formData.Add(new StreamContent(new FileStream(file, FileMode.Open)), "filedata", Path.GetFileName(file));
                     formData.Add(new StringContent(album), "a");
                     formData.Add(new StringContent(format), "f");
-                    formData.Add(new StringContent(commandline), "c");
+                    formData.Add(new StringContent(commandline.Replace('\'', '`')), "c");
                     formData.Add(new StringContent(filename), "n");
                     Uri uri = new Uri("http://boinc.moisescardona.me/media_put.php");
                     client.DefaultRequestHeaders.Add("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6,ru;q=0.4");

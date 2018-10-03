@@ -27,7 +27,7 @@ namespace submit_audio_file
                 else if (argv[arg] == "-title")
                 {
                     commandline += " -T \\\"\\\"\"\"TITLE=" + argv[arg + 1] + "\\\"\\\"\"\"";
-                    trackname = argv[arg + 1].Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
+                    trackname = argv[arg + 1].Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_'); 
                     arg++;
                 }
                 else if (argv[arg] == "-album")
