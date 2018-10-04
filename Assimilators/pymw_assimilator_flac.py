@@ -53,8 +53,8 @@ class PymwAssimilator(Assimilator):
                 shutil.copy2(resultFullPath, dest)
                 wu_basename = os.path.basename(dest)
                 template_base_name = wu_basename[:-9]
-                os.remove(assimilator_config.templates_path + template_base_name + "_wu")
-                os.remove(assimilator_config.templates_path + template_base_name + "_result")
+                if os.path.exists(assimilator_config.templates_path + template_base_name + "_wu"): os.remove(assimilator_config.templates_path + template_base_name + "_wu")
+                if os.path.exists(assimilator_config.templates_path + template_base_name + "_result"): os.remove(assimilator_config.templates_path + template_base_name + "_result")
                 os.chmod(dest, 0777)
                 conn = MySQLdb.connect(host=self.MySQLHost, db=self.MySQLDB, user=self.MySQLUsername, passwd=self.MySQLPassword)
                 cursor = conn.cursor()

@@ -38,9 +38,9 @@ if (isset($_POST['upload'])) {
         $random_token = bin2hex(random_bytes(16));
         $file_name = $_FILES["files"]["name"][$i];
         $file_tmp = $_FILES["files"]["tmp_name"][$i];
+        $filename = $random_token . "." . $ext;
         $ext = pathinfo($file_name, PATHINFO_EXTENSION);
         if (in_array($ext, Array('flac', 'wav'))) {
-            $filename = $random_token . "." . $ext;
             if (move_uploaded_file($file_tmp = $_FILES["files"]["tmp_name"][$i], $download_folder . $filename)) {
                 chmod($download_folder . $filename, 777);
                 chdir($templates_folder);
