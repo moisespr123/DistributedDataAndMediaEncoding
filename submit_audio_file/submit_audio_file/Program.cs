@@ -8,19 +8,15 @@ namespace submit_audio_file
     {
         public static bool checkArg(string arg)
         {
-            string[] args = { "-b", "-artist", "-title", "-album", "-year", "-tn", "-g", "aa", "-comm", "-comp", "-cdn", "-cdt", "tt", "-p", "-s" };
-            foreach (string argToCheck in args)
-            {
-                if (argToCheck == arg)
-                    return true;
-                else
-                    return false;
-            }
-            return true;
+            string[] args = { "-b", "-artist", "-title", "-album", "-year", "-tn", "-g", "-aa", "-comm", "-comp", "-cdn", "-cdt", "-tt", "-p", "-s" };
+            if (args.Any(arg.Contains))
+                return true;
+            else
+                return false;
         }
         public static string CreateBase64Image(string picturePath)
         {
-            return Convert.ToBase64String(File.ReadAllBytes(picturePath),Base64FormattingOptions.None);
+            return Convert.ToBase64String(File.ReadAllBytes(picturePath), Base64FormattingOptions.None);
         }
         static void Main(string[] argv)
         {

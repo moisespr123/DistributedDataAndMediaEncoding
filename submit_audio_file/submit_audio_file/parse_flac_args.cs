@@ -124,7 +124,7 @@ namespace submit_audio_file
                     if (!Program.checkArg(argv[arg + 1]))
                     {
                         picturefile = argv[arg + 1];
-                        commandline += " -T \\\"\\\"\"\"picture=input_image_file.imgfile\\\"\\\"\"\"";
+                        commandline += " --picture input_image_file.imgfile";
                         arg++;
                     }
                 }
