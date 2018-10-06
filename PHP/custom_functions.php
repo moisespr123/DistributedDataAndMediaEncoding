@@ -94,6 +94,49 @@ function insertAudioTrack($mysqli, $user, $hash, $name, $app)
     $stmt->close();
 }
 
+function getFile($mysqli, $user, $token)
+{
+    $stmt = $mysqli->prepare("SELECT * FROM user_media_files WHERE user_id=? AND random_token=? ORDER BY id");
+    $stmt->bind_param("ds", $user->id, $token);
+    $stmt->execute();
+    $results = $stmt->get_result();
+    $stmt->close();
+    return $results;
+}
+
+function getFileCategory($mysqli, $user, $token)
+{
+    $stmt = $mysqli->prepare("SELECT album FROM user_albums WHERE user_id=? AND hash=? ORDER BY id");
+    $stmt->bind_param("ds", $user, $token);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+    while($row = mysqli_fetch_assoc($result)){
+        return $row['album'];
+    }
+    return "None";
+}
+
+function getUserFiles($mysqli, $user)
+{
+    $stmt = $mysqli->prepare("SELECT * FROM user_media_files WHERE user_id=? AND expired=0 ORDER BY id");
+    $stmt->bind_param("d", $user);
+    $stmt->execute();
+    $results = $stmt->get_result();
+    $stmt->close();
+    return $results;
+}
+
+function getExtensionBasedOnApp($app)
+{
+    if ($app == 'flac_encoder')
+        return ".flac";
+    else if ($app == 'opus_encoder')
+        return ".opus";
+    else
+        return ".flac";
+}
+
 function insertAlbum($mysqli, $user, $album, $filename)
 {
     $stmt = $mysqli->prepare("INSERT INTO user_albums (user_id, album, hash) VALUES ($user, ?, ?)");

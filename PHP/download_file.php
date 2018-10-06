@@ -3,18 +3,9 @@ if (isset($_GET['f'])) {
     require_once("../inc/util.inc");
     require_once("../inc/user.inc");
     require_once("scripts_config.php");
+    require_once("custom_functions.php");
     global $mysqli;
     $user = get_logged_in_user();
-    function getFile($mysqli, $user)
-    {
-        $stmt = $mysqli->prepare("SELECT * FROM user_media_files WHERE user_id=? AND random_token=? ORDER BY id");
-        $stmt->bind_param("ds", $user->id, $_GET['f']);
-        $stmt->execute();
-        $results = $stmt->get_result();
-        $stmt->close();
-        return $results;
-    }
-
     function set_link_expired($mysqli, $user)
     {
         $stmt = $mysqli->prepare("UPDATE user_media_files SET expired=1 WHERE user_id=? AND random_token=?");
@@ -22,8 +13,7 @@ if (isset($_GET['f'])) {
         $stmt->execute();
         $stmt->close();
     }
-
-    $result = getFile($mysqli, $user);
+    $result = getFile($mysqli, $user, $_GET['f']);
     $row = mysqli_fetch_assoc($result);
     if ($row['expired'] == 0) {
         if ($user->id == $row['user_id']) {
@@ -33,7 +23,7 @@ if (isset($_GET['f'])) {
                 rename($file_path, $flac_encoder_file_path . "downloaded/" . $row['random_token']);
                 $file_path = $flac_encoder_file_path . "downloaded/" . $row['random_token'];
                 $filename = $filename . ".flac";
-            } else if ($row['app'] = 'opus_encoder') {
+            } else if ($row['app'] == 'opus_encoder') {
                 $file_path = $opus_encoder_file_path . $row['random_token'];
                 rename($file_path, $opus_encoder_file_path . "downloaded/" . $row['random_token']);
                 $file_path = $opus_encoder_file_path . "downloaded/" . $row['random_token'];
