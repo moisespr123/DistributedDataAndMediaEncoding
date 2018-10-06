@@ -6,6 +6,22 @@ namespace submit_audio_file
 {
     class Program
     {
+        public static bool checkArg(string arg)
+        {
+            string[] args = { "-b", "-artist", "-title", "-album", "-year", "-tn", "-g", "aa", "-comm", "-comp", "-cdn", "-cdt", "tt", "-p", "-s" };
+            foreach (string argToCheck in args)
+            {
+                if (argToCheck == arg)
+                    return true;
+                else
+                    return false;
+            }
+            return true;
+        }
+        public static string CreateBase64Image(string picturePath)
+        {
+            return Convert.ToBase64String(File.ReadAllBytes(picturePath),Base64FormattingOptions.None);
+        }
         static void Main(string[] argv)
         {
             string commandline = "";
@@ -13,6 +29,7 @@ namespace submit_audio_file
             string trackname = "";
             string tracknumber = "";
             string album = "";
+            string picturefile = "";
             string source = "";
             string filename = "";
             if (format == "flac")
@@ -23,8 +40,9 @@ namespace submit_audio_file
                 trackname = parsed_args[1];
                 tracknumber = parsed_args[2];
                 album = parsed_args[3];
-                source = parsed_args[4];
-                filename =  tracknumber + " - " + trackname + ".flac";
+                picturefile = parsed_args[4];
+                source = parsed_args[5];
+                filename = tracknumber + " - " + trackname + ".flac";
             }
             else if (format == "opus")
             {
@@ -34,13 +52,14 @@ namespace submit_audio_file
                 trackname = parsed_args[1];
                 tracknumber = parsed_args[2];
                 album = parsed_args[3];
-                source = parsed_args[4];
+                picturefile = parsed_args[4];
+                source = parsed_args[5];
                 filename = tracknumber + " - " + trackname + ".opus";
             }
             Console.WriteLine(commandline);
             if (File.Exists(source))
             {
-                string result = Upload(argv[0], format, commandline, filename, album, source);
+                string result = Upload(argv[0], format, commandline, filename, album, picturefile, source);
                 if (result.Contains("Done"))
                 {
                     Console.WriteLine("Job submitted :)");
@@ -63,7 +82,7 @@ namespace submit_audio_file
             else
                 Console.WriteLine("The file doesn't exists");
         }
-        private static string Upload(string key, string format, string commandline, string filename, string album, string file)
+        private static string Upload(string key, string format, string commandline, string filename, string album, string picturefile, string file)
         {
             using (var client = new HttpClient())
             using (var formData = new MultipartFormDataContent())
@@ -74,6 +93,8 @@ namespace submit_audio_file
                     formData.Add(new StringContent(album), "a");
                     formData.Add(new StringContent(format), "f");
                     formData.Add(new StringContent(commandline.Replace('\'', '`')), "c");
+                    if (picturefile != "")
+                        formData.Add(new StreamContent(new FileStream(picturefile, FileMode.Open)), "picture", "picture.img");
                     formData.Add(new StringContent(filename), "n");
                     Uri uri = new Uri("http://boinc.moisescardona.me/media_put.php");
                     client.DefaultRequestHeaders.Add("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6,ru;q=0.4");

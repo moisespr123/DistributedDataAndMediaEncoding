@@ -5,9 +5,11 @@
  * Date: 9/30/2018
  * Time: 9:32 PM
  */
-function return_wu_template($filename, $command_line){
-    return
-        "<file_info>
+function return_wu_template($filename, $command_line, $picture_file)
+{
+    if ($picture_file != true)
+        return
+            "<file_info>
     <number>0</number>
 </file_info>
 <workunit>
@@ -19,6 +21,29 @@ function return_wu_template($filename, $command_line){
     <min_quorum>1</min_quorum>
     <target_nresults>1</target_nresults>
     <command_line>$command_line</command_line>
+</workunit>";
+    else
+        return
+            "<file_info>
+    <number>0</number>
+</file_info>
+<file_info>
+    <number>1</number>
+</file_info>
+<workunit>
+    <file_ref>
+        <file_number>0</file_number>
+        <open_name>$filename</open_name>
+        <copy_file/>
+    </file_ref>
+    <file_ref>
+        <file_number>1</file_number>
+        <open_name>$filename.imgfile</open_name>
+        <copy_file/>
+    </file_ref>
+    <min_quorum>1</min_quorum>
+    <target_nresults>1</target_nresults>
+    <command_line>" . str_replace("input_image_file.imgfile", $filename . ".imgfile", $command_line) . "</command_line>
 </workunit>";
 }
 
@@ -52,7 +77,7 @@ function getUser($mysqli, $key)
     $stmt->close();
     try {
         $row = mysqli_fetch_assoc($result);
-        if (md5($row['authenticator'].$row['passwd_hash']) == $splitted_string[1])
+        if (md5($row['authenticator'] . $row['passwd_hash']) == $splitted_string[1])
             return $row['id'];
         else
             return 0;
@@ -77,34 +102,50 @@ function insertAlbum($mysqli, $user, $album, $filename)
     $stmt->close();
 }
 
-function return_job_string($appname, $hash, $filename){
-    return "./bin/create_work -appname ".$appname." -wu_name ".$appname."_".$hash." -wu_template templates/".$hash."_wu -result_template templates/" . $hash . "_result \"" . $filename . "\"";
+function return_job_string($appname, $hash, $filename)
+{
+    return "./bin/create_work -appname " . $appname . " -wu_name " . $appname . "_" . $hash . " -wu_template templates/" . $hash . "_wu -result_template templates/" . $hash . "_result \"" . $filename . "\"";
 }
 
-function generate_flac_wu_template($random_hash, $out){
-    return return_wu_template($random_hash, "--lax -l 32 -b 4096 -e -m -p -r 0,15 -A bartlett -A bartlett_hann -A blackman -A blackman_harris_4term_92db -A connes -A flattop -A gauss(0.5) -A hamming -A hann -A kaiser_bessel -A nuttall -A rectangle -A triangle -A tukey(0.5) -A partial_tukey(2) -A punchout_tukey(3) -A welch ".$random_hash." -o ".$out."-out.flac");
+function return_job_string_multiple_files($appname, $hash, $filenames)
+{
+    $job_string = "./bin/create_work -appname " . $appname . " -wu_name " . $appname . "_" . $hash . " -wu_template templates/" . $hash . "_wu -result_template templates/" . $hash . "_result ";
+    foreach ($filenames as $file)
+        $job_string .= "\"" . $file . "\" ";
+    return $job_string;
 }
 
-function generate_flac_wu_template_with_cmd($random_hash, $cmd, $out){
-    return return_wu_template($random_hash, $cmd . " ".$random_hash." -o ".$out);
+function generate_flac_wu_template($random_hash, $out)
+{
+    return return_wu_template($random_hash, "--lax -l 32 -b 4096 -e -m -p -r 0,15 -A bartlett -A bartlett_hann -A blackman -A blackman_harris_4term_92db -A connes -A flattop -A gauss(0.5) -A hamming -A hann -A kaiser_bessel -A nuttall -A rectangle -A triangle -A tukey(0.5) -A partial_tukey(2) -A punchout_tukey(3) -A welch " . $random_hash . " -o " . $out . "-out.flac");
 }
 
-function generate_flac_result_template($random_hash){
-    return return_result_template($random_hash."-out.flac");
+function generate_flac_wu_template_with_cmd($random_hash, $cmd, $out, $picture)
+{
+    return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture);
 }
 
-function generate_opus_wu_template($random_hash, $bitrate, $out){
-    return return_wu_template($random_hash, "--music --bitrate $bitrate ".$random_hash." ".$out."-out.opus");
+function generate_flac_result_template($random_hash)
+{
+    return return_result_template($random_hash . "-out.flac");
 }
 
-function generate_opus_wu_template_with_cmd($random_hash, $command_line, $out){
-    return return_wu_template($random_hash, $command_line . " " .$random_hash." ".$out);
+function generate_opus_wu_template($random_hash, $bitrate, $out)
+{
+    return return_wu_template($random_hash, "--music --bitrate $bitrate " . $random_hash . " " . $out . "-out.opus");
 }
 
-function generate_opus_result_template($random_hash){
-    return return_result_template($random_hash."-out.opus");
+function generate_opus_wu_template_with_cmd($random_hash, $command_line, $out)
+{
+    return return_wu_template($random_hash, $command_line . " " . $random_hash . " " . $out);
 }
 
-function generate_put_result_template($random_hash){
+function generate_opus_result_template($random_hash)
+{
+    return return_result_template($random_hash . "-out.opus");
+}
+
+function generate_put_result_template($random_hash)
+{
     return return_result_template($random_hash);
 }

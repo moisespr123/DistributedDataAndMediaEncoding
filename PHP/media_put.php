@@ -16,13 +16,19 @@
 require_once("scripts_config.php");
 require_once("custom_functions.php");
 global $mysqli;
-if (isset($_POST['k'])) {  $user_id = getUser($mysqli, $_POST['k']);
+if (isset($_POST['k'])) {
+    $user_id = getUser($mysqli, $_POST['k']);
     if ($user_id != 0) {
         $random_token = bin2hex(random_bytes(16));
         $ext = pathinfo($_FILES['filedata']['name']);
         $ext = $ext['extension'];
         $input_file = $random_token . "." . $ext;
+        $filenames[] = $input_file;
         if (move_uploaded_file($_FILES["filedata"]["tmp_name"], $download_folder . $input_file)) {
+            if (isset($_FILES["picture"])) {
+                move_uploaded_file($_FILES["picture"]["tmp_name"], $download_folder . $input_file . ".imgfile");
+                $filenames[] = $input_file . ".imgfile";
+            }
             chmod($download_folder . $input_file, 777);
             $format = $_POST["f"];
             chdir($templates_folder);
@@ -34,30 +40,30 @@ if (isset($_POST['k'])) {  $user_id = getUser($mysqli, $_POST['k']);
                 $app = "opus_encoder";
                 fwrite($wu_template, generate_opus_wu_template_with_cmd($input_file, $_POST['c'], $filename));
                 fwrite($result_template, generate_put_result_template($filename));
-                $job_creation_command = return_job_string("opus_encoder", $random_token, $input_file);
+                $job_creation_command = return_job_string_multiple_files("opus_encoder", $random_token, $filenames);
             } else if ($format == "flac") {
                 $filename .= "-out.flac";
                 $app = "flac_encoder";
-                fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, $_POST['c'], $filename));
+                fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, $_POST['c'], $filename, isset($_FILES["picture"])));
                 fwrite($result_template, generate_put_result_template($filename));
-                $job_creation_command = return_job_string("flac_encoder", $random_token, $input_file);
+                $job_creation_command = return_job_string_multiple_files("flac_encoder", $random_token, $filenames);
             }
             fclose($wu_template);
             fclose($result_template);
             chdir($root_folder);
             exec($job_creation_command);
-            insertAudioTrack($mysqli, $user_id, $filename, $_POST['n'] , $app);
+            insertAudioTrack($mysqli, $user_id, $filename, $_POST['n'], $app);
             if (isset($_POST['a'])) {
                 insertAlbum($mysqli, $user_id, $_POST['a'], $filename);
             }
-            rename($download_folder.$input_file, $move_folder.$input_file);
+            rename($download_folder . $input_file, $move_folder . $input_file);
+            if (isset($_FILES['picture']))
+                rename($download_folder . $input_file . ".imgfile", $move_folder . $input_file . ".imgfile");
             echo "Done";
-        }
-        else {
+        } else {
             echo "Error";
         }
-    }
-    else{
+    } else {
         echo "Incorrect User Key";
     }
 }
