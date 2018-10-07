@@ -1,15 +1,15 @@
 <?php
-if (isset($_GET['f'])) {
+if(isset($_POST['k'])) {
     require_once("../inc/util.inc");
     require_once("../inc/user.inc");
     require_once("scripts_config.php");
     require_once("custom_functions.php");
     global $mysqli;
-    $user = get_logged_in_user();
-    $result = getFile($mysqli, $user->id, $_GET['f']);
+    $user_id = getUser($mysqli, $_POST['k']);
+    $result = getFile($mysqli, $user_id, $_POST['f']);
     $row = mysqli_fetch_assoc($result);
     if ($row['expired'] == 0) {
-        if ($user->id == $row['user_id']) {
+        if ($user_id == $row['user_id']) {
             $filename = basename(pathinfo($row['filename'], PATHINFO_BASENAME), "." . pathinfo($row['filename'], PATHINFO_EXTENSION));
             if ($row['app'] == 'flac_encoder') {
                 $file_path = $flac_encoder_file_path . $row['random_token'];
@@ -35,7 +35,7 @@ if (isset($_GET['f'])) {
                 header('Cache-Control: must-revalidate');
                 header('Pragma: public');
                 header('Content-Length: ' . filesize($file_path));
-                set_link_expired($mysqli, $user->id, $_GET['f']);
+                set_link_expired($mysqli, $user_id, $_POST['f']);
                 readfile($file_path);
                 exit;
             }

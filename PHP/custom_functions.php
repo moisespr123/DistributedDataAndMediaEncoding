@@ -97,7 +97,7 @@ function insertAudioTrack($mysqli, $user, $hash, $name, $app)
 function getFile($mysqli, $user, $token)
 {
     $stmt = $mysqli->prepare("SELECT * FROM user_media_files WHERE user_id=? AND random_token=? ORDER BY id");
-    $stmt->bind_param("ds", $user->id, $token);
+    $stmt->bind_param("ds", $user, $token);
     $stmt->execute();
     $results = $stmt->get_result();
     $stmt->close();
@@ -137,6 +137,13 @@ function getExtensionBasedOnApp($app)
         return ".flac";
 }
 
+function set_link_expired($mysqli, $user, $token)
+{
+    $stmt = $mysqli->prepare("UPDATE user_media_files SET expired=1 WHERE user_id=? AND random_token=?");
+    $stmt->bind_param("ds", $user, $token);
+    $stmt->execute();
+    $stmt->close();
+}
 function insertAlbum($mysqli, $user, $album, $filename)
 {
     $stmt = $mysqli->prepare("INSERT INTO user_albums (user_id, album, hash) VALUES ($user, ?, ?)");
