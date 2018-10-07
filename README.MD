@@ -25,3 +25,8 @@ It can be combined with Exact Audio Copy to rip Audio CD's and perform encoding 
 Currently it supports submitting tasks to encode to FLAC and Opus using the apps `flac_encoder` and `opus_encoder`, respectively.
 
 See README.MD in the folder for more information and usage.
+
+## retrieve_files
+This is a Windows Forms software written in C# that allows you to download the result files from your submitted tasks. It lists the categories (if you added one) and your files. Simply, select a category or files to download them.
+
+See README.MD in the folder for more information and usage.
