@@ -117,7 +117,7 @@ namespace retrieve_files
                 if (result == DialogResult.OK)
                 {
                     string FolderPath = folderBrowserDialog1.SelectedPath;
-                    if (categoriesListBox.SelectedItem.ToString() != "None")
+                    if (categoriesListBox.SelectedItem.ToString() != "None" && !checkBox1.Checked)
                     {
                         FolderPath += "\\" + categoriesListBox.SelectedItem.ToString().Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
                     }
@@ -145,7 +145,7 @@ namespace retrieve_files
                 if (result == DialogResult.OK)
                 {
                     string FolderPath = folderBrowserDialog1.SelectedPath;
-                    if (categoriesListBox.SelectedItem.ToString() != "None")
+                    if (categoriesListBox.SelectedItem.ToString() != "None" && !checkBox1.Checked)
                     {
                         FolderPath += "\\" + categoriesListBox.SelectedItem.ToString().Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
                     }

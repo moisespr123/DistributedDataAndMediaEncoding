@@ -41,6 +41,7 @@
             this.filesListBox = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -90,25 +91,26 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(716, 538);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(716, 609);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.checkBox1);
             this.panel1.Controls.Add(this.downloadAll);
             this.panel1.Controls.Add(this.categoriesListBox);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(352, 532);
+            this.panel1.Size = new System.Drawing.Size(352, 603);
             this.panel1.TabIndex = 0;
             // 
             // downloadAll
             // 
             this.downloadAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.downloadAll.Location = new System.Drawing.Point(6, 495);
+            this.downloadAll.Location = new System.Drawing.Point(6, 546);
             this.downloadAll.Name = "downloadAll";
             this.downloadAll.Size = new System.Drawing.Size(343, 23);
             this.downloadAll.TabIndex = 2;
@@ -124,7 +126,7 @@
             this.categoriesListBox.FormattingEnabled = true;
             this.categoriesListBox.Location = new System.Drawing.Point(6, 16);
             this.categoriesListBox.Name = "categoriesListBox";
-            this.categoriesListBox.Size = new System.Drawing.Size(343, 472);
+            this.categoriesListBox.Size = new System.Drawing.Size(343, 524);
             this.categoriesListBox.TabIndex = 1;
             this.categoriesListBox.SelectedIndexChanged += new System.EventHandler(this.categoriesListBox_SelectedIndexChanged);
             // 
@@ -145,14 +147,14 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(361, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(352, 532);
+            this.panel2.Size = new System.Drawing.Size(352, 603);
             this.panel2.TabIndex = 1;
             // 
             // downloadSelected
             // 
             this.downloadSelected.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.downloadSelected.Location = new System.Drawing.Point(3, 495);
+            this.downloadSelected.Location = new System.Drawing.Point(3, 546);
             this.downloadSelected.Name = "downloadSelected";
             this.downloadSelected.Size = new System.Drawing.Size(343, 23);
             this.downloadSelected.TabIndex = 5;
@@ -169,7 +171,7 @@
             this.filesListBox.Location = new System.Drawing.Point(3, 16);
             this.filesListBox.Name = "filesListBox";
             this.filesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.filesListBox.Size = new System.Drawing.Size(343, 472);
+            this.filesListBox.Size = new System.Drawing.Size(343, 524);
             this.filesListBox.TabIndex = 4;
             // 
             // label3
@@ -181,10 +183,20 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Files";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(6, 575);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(164, 17);
+            this.checkBox1.TabIndex = 4;
+            this.checkBox1.Text = "Do not create category folder";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(740, 617);
+            this.ClientSize = new System.Drawing.Size(740, 688);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.showFilesButton);
             this.Controls.Add(this.userKey);
@@ -216,6 +228,7 @@
         private System.Windows.Forms.ListBox filesListBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
