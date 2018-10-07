@@ -129,10 +129,11 @@ namespace retrieve_files
                             await DownloadFile(userKey.Text, keys[i], FolderPath + "\\" + files[i]);
                         }
                     }
+                    MessageBox.Show("Downloads completed!");
+                    updateListBoxes();
                 }
             }
-            MessageBox.Show("Downloads completed!");
-            updateListBoxes();
+            
         }
 
         private async void downloadSelected_Click(object sender, EventArgs e)
@@ -157,10 +158,10 @@ namespace retrieve_files
                             await DownloadFile(userKey.Text, keys[index], FolderPath + "\\" + files[index]);
                         }
                     }
+                    MessageBox.Show("Downloads completed!");
+                    updateListBoxes();
                 }
             }
-            MessageBox.Show("Downloads completed!");
-            updateListBoxes();
         }
     }
 }
