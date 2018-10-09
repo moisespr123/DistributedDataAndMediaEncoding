@@ -30,7 +30,8 @@ echo "Use the following form to select .FLAC or .WAV files to upload to encode t
     <p>
         <input name="MAX_FILE_SIZE" value="268435456" type="hidden"/>
         Browse for .FLAC or .WAV files to encode:<br/>
-        <input name="files[]" type="file" multiple/><br/><br/>
+        <input name="files[]" type="file" multiple/><br/>
+        Category: <input type="text" name="category"><br/><br/>
         <input name="upload" type="submit" value="Upload"/>
     </p>
 </form>
@@ -56,6 +57,9 @@ if (isset($_POST['upload'])){
                 chdir($root_folder);
                 exec(return_job_string("flac_encoder", $random_token, $filename));
                 insertAudioTrack($mysqli, $user->id, $random_token . "-out.flac", $_FILES["files"]["name"][$i], "flac_encoder");
+                if (isset($_POST['category'])) {
+                    insertAlbum($mysqli, $user->id, $_POST['category'], $random_token . "-out.flac");
+                }
                 rename($download_folder . $filename, $move_folder . $filename);
                 echo("Workunit for file " . $_FILES["files"]["name"][$i] . " generated</br>");
             } else {
