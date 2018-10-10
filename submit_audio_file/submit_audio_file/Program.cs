@@ -24,6 +24,7 @@ namespace submit_audio_file
             string format = argv[1];
             string trackname = "";
             string tracknumber = "";
+            string artist = "";
             string album = "";
             string picturefile = "";
             string source = "";
@@ -36,8 +37,9 @@ namespace submit_audio_file
                 trackname = parsed_args[1];
                 tracknumber = parsed_args[2];
                 album = parsed_args[3];
-                picturefile = parsed_args[4];
-                source = parsed_args[5];
+                artist = parsed_args[4];
+                picturefile = parsed_args[5];
+                source = parsed_args[6];
                 filename = tracknumber + " - " + trackname + ".flac";
             }
             else if (format == "opus")
@@ -48,14 +50,15 @@ namespace submit_audio_file
                 trackname = parsed_args[1];
                 tracknumber = parsed_args[2];
                 album = parsed_args[3];
-                picturefile = parsed_args[4];
-                source = parsed_args[5];
+                artist = parsed_args[4];
+                picturefile = parsed_args[5];
+                source = parsed_args[6];
                 filename = tracknumber + " - " + trackname + ".opus";
             }
             Console.WriteLine(commandline);
             if (File.Exists(source))
             {
-                string result = Upload(argv[0], format, commandline, filename, album, picturefile, source);
+                string result = Upload(argv[0], format, commandline, filename, artist, album, picturefile, source);
                 if (result.Contains("Done"))
                 {
                     Console.WriteLine("Job submitted :)");
@@ -65,6 +68,7 @@ namespace submit_audio_file
                     Console.WriteLine("Command Line Arguments: " + commandline);
                     Console.WriteLine("Filename for output file: " + filename);
                     Console.WriteLine("Album name: " + album);
+                    Console.WriteLine("Album artist: " + artist);
                     Console.WriteLine("Input file: " + source);
                     Console.WriteLine("-----------------");
                     Console.WriteLine("List of your Media Files: http://boinc.moisescardona.me/user_files.php");
@@ -78,7 +82,7 @@ namespace submit_audio_file
             else
                 Console.WriteLine("The file doesn't exists");
         }
-        private static string Upload(string key, string format, string commandline, string filename, string album, string picturefile, string file)
+        private static string Upload(string key, string format, string commandline, string filename, string artist, string album, string picturefile, string file)
         {
             using (var client = new HttpClient())
             using (var formData = new MultipartFormDataContent())
@@ -86,7 +90,7 @@ namespace submit_audio_file
                 {
                     formData.Add(new StringContent(key), "k");
                     formData.Add(new StreamContent(new FileStream(file, FileMode.Open)), "filedata", Path.GetFileName(file));
-                    formData.Add(new StringContent(album), "a");
+                    formData.Add(new StringContent(artist + " - " + album), "a");
                     formData.Add(new StringContent(format), "f");
                     formData.Add(new StringContent(commandline.Replace('\'', '`')), "c");
                     if (picturefile != "")

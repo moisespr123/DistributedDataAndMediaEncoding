@@ -12,6 +12,7 @@ namespace submit_audio_file
         {
             string trackname = "";
             string tracknumber = "";
+            string artist = "";
             string album = "";
             string source = "";
             string commandline = "";
@@ -24,7 +25,8 @@ namespace submit_audio_file
                 {
                     if (!Program.checkArg(argv[arg + 1]))
                     {
-                        commandline += " -T \\\"\\\"\"\"ARTIST=" + argv[arg + 1] + "\\\"\\\"\"\"";
+                        artist = argv[arg + 1];
+                        commandline += " -T \\\"\\\"\"\"ARTIST=" + artist + "\\\"\\\"\"\"";
                         arg++;
                     }
                 }
@@ -138,7 +140,7 @@ namespace submit_audio_file
                 }
 
             }
-            string[] return_values = { commandline, trackname, tracknumber, album, picturefile, source };
+            string[] return_values = { commandline, trackname, tracknumber, album, artist, picturefile, source };
             return return_values;
         }
     }
