@@ -133,7 +133,7 @@ namespace retrieve_files
                     updateListBoxes();
                 }
             }
-            
+
         }
 
         private async void downloadSelected_Click(object sender, EventArgs e)
@@ -161,6 +161,36 @@ namespace retrieve_files
                     MessageBox.Show("Downloads completed!");
                     updateListBoxes();
                 }
+            }
+        }
+
+        private async void downloadAllBtn_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.ShowNewFolderButton = true;
+            folderBrowserDialog1.Description = "Browse for a folder to save the files from the selected category.";
+            DialogResult result = folderBrowserDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                for (int j = 0; j < categories.Count; j++)
+                {
+                    categoriesListBox.SelectedIndex = j;
+                    string FolderPath = folderBrowserDialog1.SelectedPath;
+                    if (categories[j] != "None")
+                    {
+                        FolderPath += "\\" + categories[j].Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
+                    }
+                    Directory.CreateDirectory(FolderPath);
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            await DownloadFile(userKey.Text, keys[i], FolderPath + "\\" + files[i]);
+                        }
+                    }
+                   
+                }
+                MessageBox.Show("Downloads completed!");
+                updateListBoxes();
             }
         }
     }

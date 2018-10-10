@@ -33,6 +33,8 @@
             this.showFilesButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.downloadAllBtn = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.downloadAll = new System.Windows.Forms.Button();
             this.categoriesListBox = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,7 +43,6 @@
             this.filesListBox = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -96,6 +97,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.downloadAllBtn);
             this.panel1.Controls.Add(this.checkBox1);
             this.panel1.Controls.Add(this.downloadAll);
             this.panel1.Controls.Add(this.categoriesListBox);
@@ -106,13 +108,35 @@
             this.panel1.Size = new System.Drawing.Size(352, 603);
             this.panel1.TabIndex = 0;
             // 
+            // downloadAllBtn
+            // 
+            this.downloadAllBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.downloadAllBtn.Location = new System.Drawing.Point(220, 546);
+            this.downloadAllBtn.Name = "downloadAllBtn";
+            this.downloadAllBtn.Size = new System.Drawing.Size(129, 23);
+            this.downloadAllBtn.TabIndex = 5;
+            this.downloadAllBtn.Text = "Download All";
+            this.downloadAllBtn.UseVisualStyleBackColor = true;
+            this.downloadAllBtn.Click += new System.EventHandler(this.downloadAllBtn_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(6, 575);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(164, 17);
+            this.checkBox1.TabIndex = 4;
+            this.checkBox1.Text = "Do not create category folder";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // downloadAll
             // 
             this.downloadAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.downloadAll.Location = new System.Drawing.Point(6, 546);
             this.downloadAll.Name = "downloadAll";
-            this.downloadAll.Size = new System.Drawing.Size(343, 23);
+            this.downloadAll.Size = new System.Drawing.Size(208, 23);
             this.downloadAll.TabIndex = 2;
             this.downloadAll.Text = "Download all files in selected category";
             this.downloadAll.UseVisualStyleBackColor = true;
@@ -183,16 +207,6 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Files";
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 575);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(164, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Do not create category folder";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -229,6 +243,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button downloadAllBtn;
     }
 }
 
