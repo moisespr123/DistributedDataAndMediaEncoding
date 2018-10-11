@@ -77,7 +77,15 @@ namespace submit_audio_file
                     if (!Program.checkArg(argv[arg + 1]))
                     {
                         artist = argv[arg + 1];
-                        commandline += " -T \\\"\\\"\"\"BAND=" + artist + "\\\"\\\"\"\" -T \\\"\\\"\"\"ALBUMARTIST=" + argv[arg + 1] + "\\\"\\\"\"\"";
+                        commandline += " -T \\\"\\\"\"\"ALBUMARTIST=" + artist + "\\\"\\\"\"\"";
+                        arg++;
+                    }
+                }
+                else if (argv[arg] == "-ai")
+                {
+                    if (!Program.checkArg(argv[arg + 1]))
+                    {
+                        commandline += " -T \\\"\\\"\"\"BAND=" + argv[arg + 1] + "\\\"\\\"\"\"";
                         arg++;
                     }
                 }

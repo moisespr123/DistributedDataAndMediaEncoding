@@ -8,7 +8,7 @@ namespace submit_audio_file
     {
         public static bool checkArg(string arg)
         {
-            string[] args = { "-b", "-artist", "-title", "-album", "-year", "-tn", "-g", "-aa", "-comm", "-comp", "-cdn", "-cdt", "-tt", "-p", "-s" };
+            string[] args = { "-b", "-artist", "-title", "-album", "-year", "-tn", "-g", "-aa", "-ai", "-comm", "-comp", "-cdn", "-cdt", "-tt", "-p", "-s" };
             if (args.Any(arg.Contains))
                 return true;
             else
