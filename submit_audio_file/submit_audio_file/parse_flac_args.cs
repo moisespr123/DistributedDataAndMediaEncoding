@@ -25,8 +25,7 @@ namespace submit_audio_file
                 {
                     if (!Program.checkArg(argv[arg + 1]))
                     {
-                        artist = argv[arg + 1];
-                        commandline += " -T \\\"\\\"\"\"ARTIST=" + artist + "\\\"\\\"\"\"";
+                        commandline += " -T \\\"\\\"\"\"ARTIST=" + argv[arg + 1] + "\\\"\\\"\"\"";
                         arg++;
                     }
                 }
@@ -77,7 +76,8 @@ namespace submit_audio_file
                 {
                     if (!Program.checkArg(argv[arg + 1]))
                     {
-                        commandline += " -T \\\"\\\"\"\"BAND=" + argv[arg + 1] + "\\\"\\\"\"\" -T \\\"\\\"\"\"ALBUMARTIST=" + argv[arg + 1] + "\\\"\\\"\"\"";
+                        artist = argv[arg + 1];
+                        commandline += " -T \\\"\\\"\"\"BAND=" + artist + "\\\"\\\"\"\" -T \\\"\\\"\"\"ALBUMARTIST=" + argv[arg + 1] + "\\\"\\\"\"\"";
                         arg++;
                     }
                 }

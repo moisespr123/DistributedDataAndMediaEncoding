@@ -35,8 +35,7 @@ namespace submit_audio_file
                 {
                     if (!Program.checkArg(argv[arg + 1]))
                     {
-                        artist = argv[arg + 1];
-                        commandline += " --artist \\\"\\\"\"\"" + artist + "\\\"\\\"\"\"";
+                        commandline += " --artist \\\"\\\"\"\"" + argv[arg + 1] + "\\\"\\\"\"\"";
                         arg++;
                     }
                 }
@@ -77,6 +76,14 @@ namespace submit_audio_file
                     if (!Program.checkArg(argv[arg + 1]))
                     {
                         commandline += " --genre \\\"\\\"\"\"" + argv[arg + 1] + "\\\"\\\"\"\"";
+                        arg++;
+                    }
+                }
+                else if (argv[arg] == "-aa")
+                {
+                    if (!Program.checkArg(argv[arg + 1]))
+                    {
+                        artist = argv[arg + 1];
                         arg++;
                     }
                 }
