@@ -38,7 +38,9 @@ namespace retrieve_files
                         Console.WriteLine("Error");
                     }
                     StreamReader reader = new StreamReader(response.Content.ReadAsStreamAsync().Result);
-                    return reader.ReadToEnd();
+                    string responseString = reader.ReadToEnd();
+                    response.Content.Dispose();
+                    return responseString;
                 }
             }
         }
@@ -58,6 +60,7 @@ namespace retrieve_files
                     }
                     FileStream fileStream = new FileStream(path, FileMode.Create);
                     await response.Content.CopyToAsync(fileStream);
+                    response.Content.Dispose();
                     fileStream.Close();
                     return true;
                 }
