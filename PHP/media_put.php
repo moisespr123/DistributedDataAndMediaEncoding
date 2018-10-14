@@ -38,7 +38,7 @@ if (isset($_POST['k'])) {
             if ($format == "opus") {
                 $filename .= "-out.opus";
                 $app = "opus_encoder";
-                fwrite($wu_template, generate_opus_wu_template_with_cmd($input_file, $_POST['c'], $filename));
+                fwrite($wu_template, generate_opus_wu_template_with_cmd($input_file, $_POST['c'], $filename, isset($_FILES["picture"])));
                 fwrite($result_template, generate_put_result_template($filename));
                 $job_creation_command = return_job_string_multiple_files("opus_encoder", $random_token, $filenames);
             } else if ($format == "flac") {

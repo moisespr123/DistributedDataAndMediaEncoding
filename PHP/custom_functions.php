@@ -185,9 +185,9 @@ function generate_opus_wu_template($random_hash, $bitrate, $out)
     return return_wu_template($random_hash, "--music --bitrate $bitrate " . $random_hash . " " . $out . "-out.opus", false);
 }
 
-function generate_opus_wu_template_with_cmd($random_hash, $command_line, $out)
+function generate_opus_wu_template_with_cmd($random_hash, $command_line, $out, $picture)
 {
-    return return_wu_template($random_hash, $command_line . " " . $random_hash . " " . $out, false);
+    return return_wu_template($random_hash, $command_line . " " . $random_hash . " " . $out, $picture);
 }
 
 function generate_opus_result_template($random_hash)
