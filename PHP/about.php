@@ -29,6 +29,12 @@ page_head(tra("About"));
 ?>
 <p>Distributed Data and Media Encoding is a project designed to distribute data workloads among hosts to do data compression or media encoding. For example, the project can send tasks to recompress FLAC files using a series of functions that decreases the file size, but are functions that takes minutes to process.
 Also, tests of new software versions can be performed by sending tasks that processes files with new, beta or alpha experimental software.</p>
+<h1>FLAC Encoder</h1>
+<p>Powered by Xiph's FLAC.exe, it allows encoding flac-compatible files to FLAC. The project uses several parameters that reduces the file size of FLAC's at the expense of CPU time.</p>
+<h1>Opus Encoder</h1>
+<p>Opus is the future of lossy audio compression. It allows you to encode your music files with very low bitrates and still produce awesome sound quality. The Opus Encoder is constantly being upgraded to the latest versions as commits comes to Xiph's Opus repositories. They are manually compiled and applied to the project. Uses Speex resampling with the maximum quality of 10 as opposed to the default quality of 5.
+<h1>CMIX Compressor</h1>
+This is a very high compression program at the expense of CPU time as well as memory. It can eaily use over 32GB of RAM, and it's recommended to run this with 64GB of RAM. It takes a very, very long time for compressing and decompressing files, but provides awesome results. This is an experimental compression software that's also constantly updated.
 <p></p>
 <?php
 page_tail();
