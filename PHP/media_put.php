@@ -39,15 +39,13 @@ if (isset($_POST['k'])) {
                 $filename .= "-out.opus";
                 $app = "opus_encoder";
                 fwrite($wu_template, generate_opus_wu_template_with_cmd($input_file, $_POST['c'], $filename, isset($_FILES["picture"])));
-                fwrite($result_template, generate_put_result_template($filename));
-                $job_creation_command = return_job_string_multiple_files("opus_encoder", $random_token, $filenames);
             } else if ($format == "flac") {
                 $filename .= "-out.flac";
                 $app = "flac_encoder";
                 fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, $_POST['c'], $filename, isset($_FILES["picture"])));
-                fwrite($result_template, generate_put_result_template($filename));
-                $job_creation_command = return_job_string_multiple_files("flac_encoder", $random_token, $filenames);
             }
+            fwrite($result_template, generate_put_result_template($filename));
+            $job_creation_command = return_job_string_multiple_files($app, $random_token, $filenames);
             fclose($wu_template);
             fclose($result_template);
             chdir($root_folder);
