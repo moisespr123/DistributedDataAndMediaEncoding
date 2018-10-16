@@ -58,7 +58,7 @@ class PymwAssimilator(Assimilator):
                 os.chmod(dest, 0777)
                 conn = MySQLdb.connect(host=self.MySQLHost, db=self.MySQLDB, user=self.MySQLUsername, passwd=self.MySQLPassword)
                 cursor = conn.cursor()
-                cursor.execute("UPDATE user_av1_files SET processed=1 WHERE filename='%s'" % (wu_basename))
+                cursor.execute("UPDATE user_av1_files SET processed=1 WHERE filename='%s'" % (wu_basename[:-4]))
                 conn.commit()
                 conn.close()
                 self.logNormal("Result copied [%s]\n", resultName)
