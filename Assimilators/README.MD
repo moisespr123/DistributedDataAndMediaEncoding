@@ -4,7 +4,7 @@ These are the scripts that will move the result files to their respective folder
 
 You'll need to modify the `assimilator_config.py` file to point to the correct paths and enter your MySQL server information.
 
-To add the assimilators, copy the `script_assimilator` program and rename them to `flac_assimilator` and `opus_assimilator`. Then, modify your `config.xml` file to add the following information:
+To add the assimilators, copy the `script_assimilator` program and rename them to their respective app assimilator name. Then, modify your `config.xml` file to add the following information:
 
 ## FLAC assimilator
 ```
@@ -20,5 +20,9 @@ To add the assimilators, copy the `script_assimilator` program and rename them t
 </daemon>
 ```
 
-
-
+## rav1e assimilator
+```
+<daemon>
+    <cmd>rav1e_assimilator --app rav1e_encoder -d 3 --script "pymw_assimilator_rav1e.py"</cmd>
+</daemon>
+```

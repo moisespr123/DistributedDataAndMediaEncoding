@@ -94,6 +94,14 @@ function insertAudioTrack($mysqli, $user, $hash, $name, $app)
     $stmt->close();
 }
 
+function insertY4mFile($mysqli, $user, $category, $name, $app)
+{
+    $stmt = $mysqli->prepare("INSERT INTO user_av1_files (user_id, category, filename, app) VALUES ($user, ?, ?, ?)");
+    $stmt->bind_param("sss", $category, $name, $app);
+    $stmt->execute();
+    $stmt->close();
+}
+
 function getFile($mysqli, $user, $token)
 {
     $stmt = $mysqli->prepare("SELECT * FROM user_media_files WHERE user_id=? AND random_token=? ORDER BY id");
@@ -198,4 +206,9 @@ function generate_opus_result_template($random_hash)
 function generate_put_result_template($random_hash)
 {
     return return_result_template($random_hash);
+}
+
+function generate_wu_general_template_cmd($input_file, $command_line)
+{
+    return return_wu_template($input_file, $command_line, false);
 }
