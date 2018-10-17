@@ -58,10 +58,10 @@ Public Class Form1
                     Dim commandLine As String = IO.Path.GetFileName(ItemsToProcess(Counter)) + " -o " + IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)) + ".ivf --quantizer " + quantizer.Value.ToString() + " -s " + speed.Value.ToString()
                     streamWriter.WriteLine("file '" + IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)) + ".ivf" + "'")
                     Upload(UserKey.Text, commandLine, IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)), OutputTxt.Text)
-                   ProgressBar1.BeginInvoke(Sub() ProgressBar1.PerformStep())
+                    ProgressBar1.BeginInvoke(Sub() ProgressBar1.PerformStep())
                 Next
                 streamWriter.Close()
-                Run_opus(My.Settings.bitrate, IO.Directory.GetCurrentDirectory + "\" +OutputTxt.Text)
+                Run_opus(My.Settings.bitrate, IO.Directory.GetCurrentDirectory + "\" + OutputTxt.Text)
                 StartBtn.BeginInvoke(Sub()
                                          StartBtn.Enabled = True
                                          audioBitrate.Enabled = True
