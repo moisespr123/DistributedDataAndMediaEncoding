@@ -55,6 +55,7 @@ class PymwAssimilator(Assimilator):
                 template_base_name = wu_basename[:-4]
                 if os.path.exists(assimilator_config.templates_path + template_base_name + "_wu"): os.remove(assimilator_config.templates_path + template_base_name + "_wu")
                 if os.path.exists(assimilator_config.templates_path + template_base_name + "_result"): os.remove(assimilator_config.templates_path + template_base_name + "_result")
+                if os.path.exists(assimilator_config.raw_files_path + template_base_name + ".y4m"): os.remove(assimilator_config.raw_files_path + template_base_name + ".y4m")
                 os.chmod(dest, 0777)
                 conn = MySQLdb.connect(host=self.MySQLHost, db=self.MySQLDB, user=self.MySQLUsername, passwd=self.MySQLPassword)
                 cursor = conn.cursor()
