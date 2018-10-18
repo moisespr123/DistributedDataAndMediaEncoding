@@ -76,7 +76,7 @@ namespace retrieve_files
             {
                 string category = item["category"];
                 if (category != "None")
-                    if (!categories.Any(category.Contains))
+                    if (!categories.Any(category.Equals))
                         categories.Add(category);
             }
             categoriesListBox.DataSource = null;
