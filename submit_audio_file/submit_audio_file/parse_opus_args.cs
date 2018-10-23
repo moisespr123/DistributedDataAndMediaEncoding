@@ -57,6 +57,14 @@ namespace submit_audio_file
                         arg++;
                     }
                 }
+                else if (argv[arg] == "-category")
+                {
+                    if (!Program.checkArg(argv[arg + 1]))
+                    {
+                        album = argv[arg + 1];
+                        arg++;
+                    }
+                }
                 else if (argv[arg] == "-year")
                 {
                     commandline += " --date \\\"\\\"\"\"" + argv[arg + 1] + "\\\"\\\"\"\"";
