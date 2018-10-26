@@ -44,10 +44,13 @@ Partial Class Form1
         Me.Label3 = New System.Windows.Forms.Label()
         Me.UserKey = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.keyFrameInterval = New System.Windows.Forms.NumericUpDown()
+        Me.Label11 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout
         CType(Me.audioBitrate,System.ComponentModel.ISupportInitialize).BeginInit
         CType(Me.speed,System.ComponentModel.ISupportInitialize).BeginInit
         CType(Me.quantizer,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.keyFrameInterval,System.ComponentModel.ISupportInitialize).BeginInit
         Me.SuspendLayout
         '
         'Label1
@@ -149,6 +152,8 @@ Partial Class Form1
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left)  _
             Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.keyFrameInterval)
+        Me.GroupBox1.Controls.Add(Me.Label11)
         Me.GroupBox1.Controls.Add(Me.audioBitrate)
         Me.GroupBox1.Controls.Add(Me.Label9)
         Me.GroupBox1.Controls.Add(Me.BrowseTempLocation)
@@ -267,6 +272,25 @@ Partial Class Form1
         Me.Label10.TabIndex = 16
         Me.Label10.Text = "User Key"
         '
+        'keyFrameInterval
+        '
+        Me.keyFrameInterval.Location = New System.Drawing.Point(217, 37)
+        Me.keyFrameInterval.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.keyFrameInterval.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.keyFrameInterval.Name = "keyFrameInterval"
+        Me.keyFrameInterval.Size = New System.Drawing.Size(65, 20)
+        Me.keyFrameInterval.TabIndex = 21
+        Me.keyFrameInterval.Value = New Decimal(New Integer() {30, 0, 0, 0})
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = true
+        Me.Label11.Location = New System.Drawing.Point(214, 21)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(90, 13)
+        Me.Label11.TabIndex = 20
+        Me.Label11.Text = "keyframe interval:"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
@@ -293,6 +317,7 @@ Partial Class Form1
         CType(Me.audioBitrate,System.ComponentModel.ISupportInitialize).EndInit
         CType(Me.speed,System.ComponentModel.ISupportInitialize).EndInit
         CType(Me.quantizer,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.keyFrameInterval,System.ComponentModel.ISupportInitialize).EndInit
         Me.ResumeLayout(false)
         Me.PerformLayout
 
@@ -320,4 +345,6 @@ End Sub
     Friend WithEvents tempLocationPath As TextBox
     Friend WithEvents UserKey As TextBox
     Friend WithEvents Label10 As Label
+    Friend WithEvents keyFrameInterval As NumericUpDown
+    Friend WithEvents Label11 As Label
 End Class

@@ -55,7 +55,7 @@ Public Class Form1
                                          End Sub)
                 Dim streamWriter As New IO.StreamWriter(IO.Directory.GetCurrentDirectory + "\" + OutputTxt.Text + "-concatenate-list.txt")
                 For Counter As Integer = 0 To ItemsToProcess.Count - 1
-                    Dim commandLine As String = IO.Path.GetFileName(ItemsToProcess(Counter)) + " -o " + IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)) + ".ivf --quantizer " + quantizer.Value.ToString() + " -s " + speed.Value.ToString()
+                    Dim commandLine As String = IO.Path.GetFileName(ItemsToProcess(Counter)) + " -o " + IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)) + ".ivf --quantizer " + quantizer.Value.ToString() + " -s " + speed.Value.ToString() + " --low_latency false -I " + keyFrameInterval.Value.ToString()
                     streamWriter.WriteLine("file '" + IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)) + ".ivf" + "'")
                     Upload(UserKey.Text, commandLine, IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)), OutputTxt.Text)
                     ProgressBar1.BeginInvoke(Sub() ProgressBar1.PerformStep())
@@ -105,23 +105,6 @@ Public Class Form1
         opusProcess.WaitForExit()
         Return True
     End Function
-    Private Function Run_rav1e(args As Array)
-        Dim Input_File As String = args(0)
-        Dim Output_File As String = args(1)
-        Dim Quantizer As String = args(2)
-        Dim Speed As String = args(3)
-        Dim rav1eProcessInfo As New ProcessStartInfo
-        Dim rav1eProcess As Process
-        rav1eProcessInfo.FileName = "rav1e.exe"
-        rav1eProcessInfo.Arguments = """" + Input_File + """ -o """ + Output_File + """ --quantizer " + Quantizer + " -s " + Speed
-        rav1eProcessInfo.CreateNoWindow = True
-        rav1eProcessInfo.RedirectStandardOutput = False
-        rav1eProcessInfo.UseShellExecute = False
-        rav1eProcess = Process.Start(rav1eProcessInfo)
-        rav1eProcess.WaitForExit()
-        ProgressBar1.BeginInvoke(Sub() ProgressBar1.PerformStep())
-        Return True
-    End Function
 
     Private Function split_video_file(input As String, output As String, tempFolder As String)
         Dim ffmpegProcessInfo As New ProcessStartInfo
@@ -154,16 +137,6 @@ Public Class Form1
         speed.Value = My.Settings.speed
         audioBitrate.Value = My.Settings.bitrate
         tempLocationPath.Text = My.Settings.tempFolder
-        'If Not OpusEncExists() Then
-        '    MessageBox.Show("opusenc.exe was not found. Exiting...")
-        '    Process.Start("https://moisescardona.me/opusenc_compiles")
-        '    Me.Close()
-        'End If
-        'If Not ffmpegExists() Then
-        '    MessageBox.Show("ffmpeg.exe was not found. Exiting...")
-        '    Process.Start("https://moisescardona.me/downloading_ffmpeg_rav1e_gui")
-        '    Me.Close()
-        'End If
         GUILoaded = True
     End Sub
     Private Function ffmpegExists() As Boolean
