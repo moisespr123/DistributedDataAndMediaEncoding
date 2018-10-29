@@ -41,7 +41,7 @@ namespace submit_audio_file
                 picturefile = parsed_args[5];
                 source = parsed_args[6];
                 if (!string.IsNullOrEmpty(tracknumber) && !string.IsNullOrEmpty(trackname))
-                    filename = tracknumber + " - " + trackname + ".flac";
+                    filename = string.Format("{0:00}", Convert.ToInt32(tracknumber)) + " - " + trackname + ".flac";
                 else
                     filename = Path.GetFileNameWithoutExtension(source) + ".flac";
             }
@@ -57,7 +57,7 @@ namespace submit_audio_file
                 picturefile = parsed_args[5];
                 source = parsed_args[6];
                 if (!string.IsNullOrEmpty(tracknumber) && !string.IsNullOrEmpty(trackname))
-                    filename = tracknumber + " - " + trackname + ".opus";
+                    filename = string.Format("{0:00}",Convert.ToInt32(tracknumber)) + " - " + trackname + ".opus";
                 else
                     filename = Path.GetFileNameWithoutExtension(source) + ".opus";
             }
