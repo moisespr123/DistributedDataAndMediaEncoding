@@ -190,11 +190,33 @@ namespace retrieve_files
                             await DownloadFile(userKey.Text, keys[i], FolderPath + "\\" + files[i]);
                         }
                     }
-                   
+
                 }
                 MessageBox.Show("Downloads completed!");
                 updateListBoxes();
             }
+        }
+
+        private void userKey_TextChanged(object sender, EventArgs e)
+        {
+            if (Remember.Checked)
+            {
+                Properties.Settings.Default.key = userKey.Text;
+                Properties.Settings.Default.Save();
+            }
+
+        }
+
+        private void Remember_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Remember = Remember.Checked;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Remember.Checked = Properties.Settings.Default.Remember;
+            if (Remember.Checked)
+                userKey.Text = Properties.Settings.Default.key;
         }
     }
 }

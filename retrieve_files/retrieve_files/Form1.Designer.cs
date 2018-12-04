@@ -43,6 +43,7 @@
             this.filesListBox = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.Remember = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -65,6 +66,7 @@
             this.userKey.Name = "userKey";
             this.userKey.Size = new System.Drawing.Size(632, 20);
             this.userKey.TabIndex = 1;
+            this.userKey.TextChanged += new System.EventHandler(this.userKey_TextChanged);
             // 
             // showFilesButton
             // 
@@ -207,16 +209,29 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Files";
             // 
+            // Remember
+            // 
+            this.Remember.AutoSize = true;
+            this.Remember.Location = new System.Drawing.Point(15, 47);
+            this.Remember.Name = "Remember";
+            this.Remember.Size = new System.Drawing.Size(77, 17);
+            this.Remember.TabIndex = 4;
+            this.Remember.Text = "Remember";
+            this.Remember.UseVisualStyleBackColor = true;
+            this.Remember.CheckedChanged += new System.EventHandler(this.Remember_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(740, 688);
+            this.Controls.Add(this.Remember);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.showFilesButton);
             this.Controls.Add(this.userKey);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Distributed Data and Media Processing | Data Retriever";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -244,6 +259,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button downloadAllBtn;
+        private System.Windows.Forms.CheckBox Remember;
     }
 }
 
