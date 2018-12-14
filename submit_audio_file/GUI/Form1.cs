@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace GUI
 {
@@ -23,12 +17,17 @@ namespace GUI
             ProcessStartInfo batchScriptInfo = new ProcessStartInfo();
             batchScriptInfo.FileName = "submit_audio_to_boinc_server.bat";
             if (radioButton1.Checked)
-                batchScriptInfo.Arguments = "\"" + textBox1.Text + "\" \"" + textBox2.Text + "\" flac";
+                batchScriptInfo.Arguments = "\"" + PathTxt.Text + "\" \"" + CategoryTxt.Text + "\" flac";
             else
-                batchScriptInfo.Arguments = "\"" + textBox1.Text + "\" \"" + textBox2.Text + "\" opus";
+                batchScriptInfo.Arguments = "\"" + PathTxt.Text + "\" \"" + CategoryTxt.Text + "\" opus";
             Process batch = Process.Start(batchScriptInfo);
             batch.WaitForExit();
 
+        }
+
+        private void PathTxt_TextChanged(object sender, EventArgs e)
+        {
+            if (Directory.Exists(PathTxt.Text)) CategoryTxt.Text = Path.GetFileName(PathTxt.Text);
         }
     }
 }
