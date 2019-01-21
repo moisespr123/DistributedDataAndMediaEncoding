@@ -34,6 +34,7 @@ Public Class Form1
         audioBitrate.Enabled = False
         quantizer.Enabled = False
         speed.Enabled = False
+        keyFrameInterval.Enabled = False
         tempLocationPath.Enabled = False
         BrowseTempLocation.Enabled = False
         Dim StartTasks As New Threading.Thread(Sub() StartThreads())
@@ -55,7 +56,7 @@ Public Class Form1
                                          End Sub)
                 Dim streamWriter As New IO.StreamWriter(IO.Directory.GetCurrentDirectory + "\" + OutputTxt.Text + "-concatenate-list.txt")
                 For Counter As Integer = 0 To ItemsToProcess.Count - 1
-                    Dim commandLine As String = IO.Path.GetFileName(ItemsToProcess(Counter)) + " -o " + IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)) + ".ivf --quantizer " + quantizer.Value.ToString() + " -s " + speed.Value.ToString() + " --low_latency false -I " + keyFrameInterval.Value.ToString()
+                    Dim commandLine As String = IO.Path.GetFileName(ItemsToProcess(Counter)) + " -o " + IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)) + ".ivf --quantizer " + quantizer.Value.ToString() + " -s " + speed.Value.ToString() + " --low_latency false  -i " + keyFrameInterval.Value.ToString() + " -I " + keyFrameInterval.Value.ToString()
                     streamWriter.WriteLine("file '" + IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)) + ".ivf" + "'")
                     Upload(UserKey.Text, commandLine, IO.Path.GetFileNameWithoutExtension(ItemsToProcess(Counter)), OutputTxt.Text)
                     ProgressBar1.BeginInvoke(Sub() ProgressBar1.PerformStep())
@@ -67,6 +68,7 @@ Public Class Form1
                                          audioBitrate.Enabled = True
                                          quantizer.Enabled = True
                                          speed.Enabled = True
+                                         keyFrameInterval.Enabled = True
                                          tempLocationPath.Enabled = True
                                          BrowseTempLocation.Enabled = True
                                          OutputTxt.Enabled = True
@@ -110,7 +112,7 @@ Public Class Form1
         Dim ffmpegProcessInfo As New ProcessStartInfo
         Dim ffmpegProcess As Process
         ffmpegProcessInfo.FileName = "ffmpeg.exe"
-        ffmpegProcessInfo.Arguments = "-i """ + input + """ -f segment -segment_time 1 """ + tempFolder + "/" + output + "-part-%6d.y4m"""
+        ffmpegProcessInfo.Arguments = "-i """ + input + """ -f segment -segment_time 1 """ + tempFolder + "/" + output + "-part-%6d.y4m"" -y"
         ffmpegProcessInfo.CreateNoWindow = True
         ffmpegProcessInfo.RedirectStandardOutput = False
         ffmpegProcessInfo.UseShellExecute = False
@@ -123,7 +125,7 @@ Public Class Form1
         Dim ffmpegProcessInfo As New ProcessStartInfo
         Dim ffmpegProcess As Process
         ffmpegProcessInfo.FileName = "ffmpeg.exe"
-        ffmpegProcessInfo.Arguments = "-i """ + input + """ -vn """ + output + "-rav1e-audio.wav"""
+        ffmpegProcessInfo.Arguments = "-i """ + input + """ -vn """ + output + "-rav1e-audio.wav"" -y"
         ffmpegProcessInfo.CreateNoWindow = True
         ffmpegProcessInfo.RedirectStandardOutput = False
         ffmpegProcessInfo.UseShellExecute = False
@@ -136,6 +138,7 @@ Public Class Form1
         quantizer.Value = My.Settings.quantizer
         speed.Value = My.Settings.speed
         audioBitrate.Value = My.Settings.bitrate
+        keyFrameInterval.Value = My.Settings.keyframeInterval
         tempLocationPath.Text = My.Settings.tempFolder
         GUILoaded = True
     End Sub
@@ -189,6 +192,17 @@ Public Class Form1
         Dim OkAction As MsgBoxResult = TempFolderBrowser.ShowDialog
         If OkAction = MsgBoxResult.Ok Then
             tempLocationPath.Text = TempFolderBrowser.SelectedPath
+        End If
+    End Sub
+
+    Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
+
+    End Sub
+
+    Private Sub keyFrameInterval_ValueChanged(sender As Object, e As EventArgs) Handles keyFrameInterval.ValueChanged
+        If GUILoaded Then
+            My.Settings.keyframeInterval = keyFrameInterval.Value
+            My.Settings.Save()
         End If
     End Sub
 End Class

@@ -14,5 +14,8 @@
     <Setting Name="bitrate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">64</Value>
     </Setting>
+    <Setting Name="keyframeInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

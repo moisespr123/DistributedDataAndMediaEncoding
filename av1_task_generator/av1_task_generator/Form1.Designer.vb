@@ -33,6 +33,8 @@ Partial Class Form1
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.keyFrameInterval = New System.Windows.Forms.NumericUpDown()
+        Me.Label11 = New System.Windows.Forms.Label()
         Me.audioBitrate = New System.Windows.Forms.NumericUpDown()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.BrowseTempLocation = New System.Windows.Forms.Button()
@@ -44,18 +46,16 @@ Partial Class Form1
         Me.Label3 = New System.Windows.Forms.Label()
         Me.UserKey = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.keyFrameInterval = New System.Windows.Forms.NumericUpDown()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.GroupBox1.SuspendLayout
-        CType(Me.audioBitrate,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.speed,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.quantizer,System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.keyFrameInterval,System.ComponentModel.ISupportInitialize).BeginInit
-        Me.SuspendLayout
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.keyFrameInterval, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.audioBitrate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.speed, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.quantizer, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
         '
         'Label1
         '
-        Me.Label1.AutoSize = true
+        Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(12, 9)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(151, 13)
@@ -64,7 +64,7 @@ Partial Class Form1
         '
         'Label2
         '
-        Me.Label2.AutoSize = true
+        Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(12, 52)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(145, 13)
@@ -73,8 +73,8 @@ Partial Class Form1
         '
         'InputTxt
         '
-        Me.InputTxt.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.InputTxt.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.InputTxt.Location = New System.Drawing.Point(15, 26)
         Me.InputTxt.Name = "InputTxt"
         Me.InputTxt.Size = New System.Drawing.Size(340, 20)
@@ -82,8 +82,8 @@ Partial Class Form1
         '
         'OutputTxt
         '
-        Me.OutputTxt.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.OutputTxt.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.OutputTxt.Location = New System.Drawing.Point(15, 68)
         Me.OutputTxt.Name = "OutputTxt"
         Me.OutputTxt.Size = New System.Drawing.Size(415, 20)
@@ -91,28 +91,28 @@ Partial Class Form1
         '
         'InputBrowseBtn
         '
-        Me.InputBrowseBtn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.InputBrowseBtn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.InputBrowseBtn.Location = New System.Drawing.Point(361, 24)
         Me.InputBrowseBtn.Name = "InputBrowseBtn"
         Me.InputBrowseBtn.Size = New System.Drawing.Size(75, 23)
         Me.InputBrowseBtn.TabIndex = 5
         Me.InputBrowseBtn.Text = "Browse"
-        Me.InputBrowseBtn.UseVisualStyleBackColor = true
+        Me.InputBrowseBtn.UseVisualStyleBackColor = True
         '
         'StartBtn
         '
-        Me.StartBtn.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.StartBtn.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.StartBtn.Location = New System.Drawing.Point(15, 267)
         Me.StartBtn.Name = "StartBtn"
         Me.StartBtn.Size = New System.Drawing.Size(424, 37)
         Me.StartBtn.TabIndex = 8
         Me.StartBtn.Text = "Start"
-        Me.StartBtn.UseVisualStyleBackColor = true
+        Me.StartBtn.UseVisualStyleBackColor = True
         '
         'Label4
         '
-        Me.Label4.AutoSize = true
+        Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(15, 314)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(51, 13)
@@ -121,8 +121,8 @@ Partial Class Form1
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.ProgressBar1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ProgressBar1.Location = New System.Drawing.Point(18, 331)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(421, 23)
@@ -131,7 +131,7 @@ Partial Class Form1
         '
         'Label5
         '
-        Me.Label5.AutoSize = true
+        Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(15, 368)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(119, 13)
@@ -140,18 +140,18 @@ Partial Class Form1
         '
         'Label6
         '
-        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
-        Me.Label6.AutoSize = true
+        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(411, 368)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(28, 13)
         Me.Label6.TabIndex = 12
-        Me.Label6.Text = "v1.0"
+        Me.Label6.Text = "v1.1"
         '
         'GroupBox1
         '
-        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.keyFrameInterval)
         Me.GroupBox1.Controls.Add(Me.Label11)
         Me.GroupBox1.Controls.Add(Me.audioBitrate)
@@ -167,8 +167,27 @@ Partial Class Form1
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(421, 122)
         Me.GroupBox1.TabIndex = 15
-        Me.GroupBox1.TabStop = false
+        Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Encoder Options"
+        '
+        'keyFrameInterval
+        '
+        Me.keyFrameInterval.Location = New System.Drawing.Point(217, 37)
+        Me.keyFrameInterval.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
+        Me.keyFrameInterval.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.keyFrameInterval.Name = "keyFrameInterval"
+        Me.keyFrameInterval.Size = New System.Drawing.Size(65, 20)
+        Me.keyFrameInterval.TabIndex = 21
+        Me.keyFrameInterval.Value = New Decimal(New Integer() {30, 0, 0, 0})
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(214, 21)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(90, 13)
+        Me.Label11.TabIndex = 20
+        Me.Label11.Text = "keyframe interval:"
         '
         'audioBitrate
         '
@@ -182,7 +201,7 @@ Partial Class Form1
         '
         'Label9
         '
-        Me.Label9.AutoSize = true
+        Me.Label9.AutoSize = True
         Me.Label9.Location = New System.Drawing.Point(140, 21)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(68, 13)
@@ -191,17 +210,17 @@ Partial Class Form1
         '
         'BrowseTempLocation
         '
-        Me.BrowseTempLocation.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.BrowseTempLocation.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BrowseTempLocation.Location = New System.Drawing.Point(340, 83)
         Me.BrowseTempLocation.Name = "BrowseTempLocation"
         Me.BrowseTempLocation.Size = New System.Drawing.Size(75, 23)
         Me.BrowseTempLocation.TabIndex = 17
         Me.BrowseTempLocation.Text = "Browse"
-        Me.BrowseTempLocation.UseVisualStyleBackColor = true
+        Me.BrowseTempLocation.UseVisualStyleBackColor = True
         '
         'Label8
         '
-        Me.Label8.AutoSize = true
+        Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(9, 69)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(126, 13)
@@ -210,8 +229,8 @@ Partial Class Form1
         '
         'tempLocationPath
         '
-        Me.tempLocationPath.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.tempLocationPath.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tempLocationPath.Location = New System.Drawing.Point(12, 85)
         Me.tempLocationPath.Name = "tempLocationPath"
         Me.tempLocationPath.Size = New System.Drawing.Size(322, 20)
@@ -228,7 +247,7 @@ Partial Class Form1
         '
         'Label7
         '
-        Me.Label7.AutoSize = true
+        Me.Label7.AutoSize = True
         Me.Label7.Location = New System.Drawing.Point(77, 21)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(39, 13)
@@ -247,7 +266,7 @@ Partial Class Form1
         '
         'Label3
         '
-        Me.Label3.AutoSize = true
+        Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(9, 21)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(53, 13)
@@ -256,8 +275,8 @@ Partial Class Form1
         '
         'UserKey
         '
-        Me.UserKey.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left)  _
-            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.UserKey.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.UserKey.Location = New System.Drawing.Point(15, 241)
         Me.UserKey.Name = "UserKey"
         Me.UserKey.Size = New System.Drawing.Size(421, 20)
@@ -265,37 +284,18 @@ Partial Class Form1
         '
         'Label10
         '
-        Me.Label10.AutoSize = true
+        Me.Label10.AutoSize = True
         Me.Label10.Location = New System.Drawing.Point(12, 224)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(50, 13)
         Me.Label10.TabIndex = 16
         Me.Label10.Text = "User Key"
         '
-        'keyFrameInterval
-        '
-        Me.keyFrameInterval.Location = New System.Drawing.Point(217, 37)
-        Me.keyFrameInterval.Maximum = New Decimal(New Integer() {10000, 0, 0, 0})
-        Me.keyFrameInterval.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.keyFrameInterval.Name = "keyFrameInterval"
-        Me.keyFrameInterval.Size = New System.Drawing.Size(65, 20)
-        Me.keyFrameInterval.TabIndex = 21
-        Me.keyFrameInterval.Value = New Decimal(New Integer() {30, 0, 0, 0})
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = true
-        Me.Label11.Location = New System.Drawing.Point(214, 21)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(90, 13)
-        Me.Label11.TabIndex = 20
-        Me.Label11.Text = "keyframe interval:"
-        '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(448, 410)
+        Me.ClientSize = New System.Drawing.Size(448, 394)
         Me.Controls.Add(Me.UserKey)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.GroupBox1)
@@ -309,16 +309,16 @@ Partial Class Form1
         Me.Controls.Add(Me.InputTxt)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.MaximizeBox = false
+        Me.MaximizeBox = False
         Me.Name = "Form1"
         Me.Text = "Distributed Data and Media Encoding | AV1 Task Submitter"
-        Me.GroupBox1.ResumeLayout(false)
-        Me.GroupBox1.PerformLayout
-        CType(Me.audioBitrate,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.speed,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.quantizer,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.keyFrameInterval,System.ComponentModel.ISupportInitialize).EndInit
-        Me.ResumeLayout(false)
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        CType(Me.keyFrameInterval, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.audioBitrate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.speed, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.quantizer, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
         Me.PerformLayout
 
 End Sub
