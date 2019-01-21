@@ -210,6 +210,9 @@ namespace retrieve_files
         private void Remember_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.Remember = Remember.Checked;
+            if (!Remember.Checked)
+                Properties.Settings.Default.key = String.Empty;
+            Properties.Settings.Default.Save();
         }
 
         private void Form1_Load(object sender, EventArgs e)
