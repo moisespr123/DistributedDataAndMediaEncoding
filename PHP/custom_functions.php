@@ -1,50 +1,61 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cardo
- * Date: 9/30/2018
- * Time: 9:32 PM
- */
-function return_wu_template($filename, $command_line, $picture_file)
+
+$rsc_fpops_est = "3600000000000";
+$flac_rsc_fpops_est = "50000000000000";
+$rav1e_rsc_fpops_est = "360000000000000";
+$rsc_fpops_bound = "8640000000000000";
+$rsc_memory_bound = "500000000";
+$rsc_disk_bound = "1000000000";
+
+
+function return_wu_template($filename, $command_line, $picture_file, $fpops_est, $fpops_bound, $memory_bound, $disk_bound) 
 {
-    if ($picture_file != true)
-        return
-            "<file_info>
+$max_error_results = "10";
+$max_total_results = "40";
+
+$workunit_template = "
+<file_info>
     <number>0</number>
-</file_info>
-<workunit>
-    <file_ref>
-        <file_number>0</file_number>
-        <open_name>$filename</open_name>
-        <copy_file/>
-    </file_ref>
-    <min_quorum>1</min_quorum>
-    <target_nresults>1</target_nresults>
-    <command_line>$command_line</command_line>
-</workunit>";
-    else
-        return
-            "<file_info>
-    <number>0</number>
-</file_info>
+</file_info>";
+
+if ($picture_file)
+$workunit_template.= "
 <file_info>
     <number>1</number>
-</file_info>
+</file_info>";
+
+$workunit_template.= "
 <workunit>
     <file_ref>
         <file_number>0</file_number>
         <open_name>$filename</open_name>
         <copy_file/>
-    </file_ref>
-    <file_ref>
+    </file_ref>";
+	
+if ($picture_file)
+$workunit_template.= "
+	<file_ref>
         <file_number>1</file_number>
         <open_name>$filename.imgfile</open_name>
         <copy_file/>
-    </file_ref>
-    <min_quorum>1</min_quorum>
+    </file_ref>";
+
+if ($picture_file)
+$workunit_template.= "<command_line>" . str_replace("input_image_file.imgfile", $filename . ".imgfile", $command_line) . "</command_line>";
+else
+$workunit_template.="<command_line>$command_line</command_line>";
+
+$workunit_template.="
+    <rsc_fpops_est>$fpops_est</rsc_fpops_est>
+	<rsc_fpops_bound>$fpops_bound</rsc_fpops_bound>
+	<rsc_memory_bound>$memory_bound</rsc_memory_bound>
+	<rsc_disk_bound>$disk_bound</rsc_disk_bound>
+	<min_quorum>1</min_quorum>
     <target_nresults>1</target_nresults>
-    <command_line>" . str_replace("input_image_file.imgfile", $filename . ".imgfile", $command_line) . "</command_line>
+	<max_error_results>$max_error_results</max_error_results>
+	<max_total_results>$max_total_results</max_total_results>
 </workunit>";
+return $workunit_template;
 }
 
 function return_result_template($filename)
@@ -175,12 +186,14 @@ function return_job_string_multiple_files($appname, $hash, $filenames)
 
 function generate_flac_wu_template($random_hash, $out)
 {
-    return return_wu_template($random_hash, "--lax -l 32 -b 4096 -e -m -p -r 0,15 -A bartlett -A bartlett_hann -A blackman -A blackman_harris_4term_92db -A connes -A flattop -A gauss(0.5) -A hamming -A hann -A kaiser_bessel -A nuttall -A rectangle -A triangle -A tukey(0.5) -A partial_tukey(2) -A punchout_tukey(3) -A welch " . $random_hash . " -o " . $out . "-out.flac", false);
+	global $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    return return_wu_template($random_hash, "--lax -l 32 -b 4096 -e -m -p -r 0,15 -A bartlett -A bartlett_hann -A blackman -A blackman_harris_4term_92db -A connes -A flattop -A gauss(0.5) -A hamming -A hann -A kaiser_bessel -A nuttall -A rectangle -A triangle -A tukey(0.5) -A partial_tukey(2) -A punchout_tukey(3) -A welch " . $random_hash . " -o " . $out . "-out.flac", false, $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
 function generate_flac_wu_template_with_cmd($random_hash, $cmd, $out, $picture)
 {
-    return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture);
+	global $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture, $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
 function generate_flac_result_template($random_hash)
@@ -190,12 +203,14 @@ function generate_flac_result_template($random_hash)
 
 function generate_opus_wu_template($random_hash, $bitrate, $out)
 {
-    return return_wu_template($random_hash, "--music --bitrate $bitrate " . $random_hash . " " . $out . "-out.opus", false);
+	global $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    return return_wu_template($random_hash, "--music --bitrate $bitrate " . $random_hash . " " . $out . "-out.opus", false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
 function generate_opus_wu_template_with_cmd($random_hash, $command_line, $out, $picture)
 {
-    return return_wu_template($random_hash, $command_line . " " . $random_hash . " " . $out, $picture);
+	global $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    return return_wu_template($random_hash, $command_line . " " . $random_hash . " " . $out, $picture, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
 function generate_opus_result_template($random_hash)
@@ -211,4 +226,10 @@ function generate_put_result_template($random_hash)
 function generate_wu_general_template_cmd($input_file, $command_line)
 {
     return return_wu_template($input_file, $command_line, false);
+}
+
+function generate_wu_rav1e_template_cmd($input_file, $command_line)
+{
+	global $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    return return_wu_template($input_file, $command_line, false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }

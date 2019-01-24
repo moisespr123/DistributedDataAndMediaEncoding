@@ -22,7 +22,7 @@ if (isset($_POST['k'])) {
         $wu_template = fopen($filename . "_wu", "w");
         $result_template = fopen($filename . "_result", "w");
         $app = "rav1e_encoder";
-        fwrite($wu_template, generate_wu_general_template_cmd($filename . ".y4m", $_POST['c']));
+        fwrite($wu_template, generate_wu_rav1e_template_cmd($filename . ".y4m", $_POST['c']));
         fwrite($result_template, generate_put_result_template($filename . ".ivf"));
         $job_creation_command = return_job_string($app, $filename, $filename . ".y4m");
         fclose($wu_template);
