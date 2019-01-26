@@ -113,6 +113,18 @@ Namespace My
                 Me("keyframeInterval") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property weak_key() As String
+            Get
+                Return CType(Me("weak_key"),String)
+            End Get
+            Set
+                Me("weak_key") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

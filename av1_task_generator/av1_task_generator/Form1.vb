@@ -140,7 +140,17 @@ Public Class Form1
         audioBitrate.Value = My.Settings.bitrate
         keyFrameInterval.Value = My.Settings.keyframeInterval
         tempLocationPath.Text = My.Settings.tempFolder
+        UserKey.Text = My.Settings.weak_key
         GUILoaded = True
+    End Sub
+    Private Sub Form1_DragEnter(sender As Object, e As DragEventArgs) Handles MyBase.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
+
+    Private Sub Form1_DragDrop(sender As Object, e As DragEventArgs) Handles MyBase.DragDrop
+        InputTxt.Text = CType(e.Data.GetData(DataFormats.FileDrop), String())(0)
     End Sub
     Private Function ffmpegExists() As Boolean
         If My.Computer.FileSystem.FileExists("ffmpeg.exe") Then
@@ -204,5 +214,9 @@ Public Class Form1
             My.Settings.keyframeInterval = keyFrameInterval.Value
             My.Settings.Save()
         End If
+    End Sub
+
+    Private Sub UserKey_TextChanged(sender As Object, e As EventArgs) Handles UserKey.TextChanged
+        My.Settings.weak_key = UserKey.Text
     End Sub
 End Class

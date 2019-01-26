@@ -146,7 +146,7 @@ Partial Class Form1
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(28, 13)
         Me.Label6.TabIndex = 12
-        Me.Label6.Text = "v1.1"
+        Me.Label6.Text = "v1.2"
         '
         'GroupBox1
         '
@@ -279,6 +279,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.UserKey.Location = New System.Drawing.Point(15, 241)
         Me.UserKey.Name = "UserKey"
+        Me.UserKey.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
         Me.UserKey.Size = New System.Drawing.Size(421, 20)
         Me.UserKey.TabIndex = 17
         '
@@ -293,6 +294,7 @@ Partial Class Form1
         '
         'Form1
         '
+        Me.AllowDrop = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(448, 394)
