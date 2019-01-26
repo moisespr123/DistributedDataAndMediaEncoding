@@ -17,6 +17,10 @@ This folder includes modified and custom PHP code
 
 See README.MD in the folder for more information and usage.
 
+## Scripts
+
+Contains cmd scripts
+
 ## submit_audio_file
 This is a Command-Line software written in C# that acts as a file submitter. It communicates with a custom PHP file that receives an audio file and generates the workunit.
 
