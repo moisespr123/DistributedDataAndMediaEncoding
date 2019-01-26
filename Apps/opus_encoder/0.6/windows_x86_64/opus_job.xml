@@ -1,0 +1,9 @@
+<job_desc>
+      <task>
+          <application>opus_encoder</application>
+          <stdout_filename>log.log</stdout_filename>
+          <stderr_filename>err.err</stderr_filename>
+          <checkpoint_filename>check.check</checkpoint_filename>
+          <append_cmdline_args/>
+      </task>
+  </job_desc>

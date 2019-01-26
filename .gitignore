@@ -266,9 +266,7 @@ __pycache__/
 /pymw_assimilator.py
 /PHP/weak_auth.php
 /PHP/scripts_config.php
-/xml.inc
-/web_rpc_api.inc
-/util_ops.inc
-/util_basic.inc
-/util.inc
-/user.inc
+*.exe
+/assimilator_config.py
+/Apps/rav1e_encoder/0.15/x86_64-pc-linux-gnu/wrapper_26014_x86_64-pc-linux-gnu
+/Apps/rav1e_encoder/0.15/x86_64-pc-linux-gnu/rav1e-0.1.0-e5ab520

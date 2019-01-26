@@ -1,0 +1,14 @@
+<version>
+     <file>
+        <physical_name>wrapper_26014_windows_x86_64_custom.exe</physical_name>
+        <main_program/>
+     </file>
+     <file>
+        <physical_name>opusenc_0.4.exe</physical_name>
+        <logical_name>opus_encoder</logical_name>
+     </file>
+     <file>
+        <physical_name>opus_job.xml</physical_name>
+        <logical_name>job.xml</logical_name>
+     </file>
+ </version>

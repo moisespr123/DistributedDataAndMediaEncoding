@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28516.95
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "av1_task_generator", "av1_task_generator\av1_task_generator.vbproj", "{51B64CB0-26F1-466F-A4EF-05F48DA441ED}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "av1_merger", "av1_merger\av1_merger.vbproj", "{1037576F-0703-40D2-8654-31C7809AEE29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{51B64CB0-26F1-466F-A4EF-05F48DA441ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{51B64CB0-26F1-466F-A4EF-05F48DA441ED}.Release|x64.ActiveCfg = Release|x64
 		{51B64CB0-26F1-466F-A4EF-05F48DA441ED}.Release|x64.Build.0 = Release|x64
+		{1037576F-0703-40D2-8654-31C7809AEE29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1037576F-0703-40D2-8654-31C7809AEE29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1037576F-0703-40D2-8654-31C7809AEE29}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1037576F-0703-40D2-8654-31C7809AEE29}.Debug|x64.Build.0 = Debug|Any CPU
+		{1037576F-0703-40D2-8654-31C7809AEE29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1037576F-0703-40D2-8654-31C7809AEE29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1037576F-0703-40D2-8654-31C7809AEE29}.Release|x64.ActiveCfg = Release|Any CPU
+		{1037576F-0703-40D2-8654-31C7809AEE29}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

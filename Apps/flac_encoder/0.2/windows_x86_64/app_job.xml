@@ -1,0 +1,9 @@
+<job_desc>
+      <task>
+          <application>flac_encoder</application>
+          <stdout_filename>md.log</stdout_filename>
+          <stderr_filename>md.err</stderr_filename>
+          <checkpoint_filename>md.rst</checkpoint_filename>
+          <append_cmdline_args/>
+      </task>
+  </job_desc>
