@@ -3,7 +3,7 @@
 Concatenates .ivf files and merges the result file with the .opus file.
 
 Usage:
-`generate_webm.bat concat_txt_file.txt opus_file.opus final_file.webm
+`generate_webm.bat concat_txt_file.txt opus_file.opus final_file.webm`
 
 # submit_audio_file_to_boinc_server.bat
 
