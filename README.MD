@@ -36,4 +36,4 @@ This is a Windows Forms software written in C# that allows you to download the r
 See README.MD in the folder for more information and usage.
 
 ## av1_task_generator
-This is a Windows Forms software written in Visual Basic .NET that will create rav1e tasks to distribute on a BOINC Server.
+This is a Windows Forms software written in Visual Basic .NET that will create rav1e tasks to distribute on a BOINC Server. Also included is the av1_merge utility to merge the result files and generate the final WebM file.
