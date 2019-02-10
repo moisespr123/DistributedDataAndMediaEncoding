@@ -79,5 +79,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\submit_audio_file\submit_audio_file.csproj">
+      <Project>{65436bea-41ab-439c-b1c7-d4027b6a045f}</Project>
+      <Name>submit_audio_file</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
