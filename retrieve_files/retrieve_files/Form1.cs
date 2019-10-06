@@ -114,12 +114,9 @@ namespace retrieve_files
         {
             if (categoriesListBox.SelectedIndex >= 0)
             {
-                folderBrowserDialog1.ShowNewFolderButton = true;
-                folderBrowserDialog1.Description = "Browse for a folder to save the files from the selected category.";
-                DialogResult result = folderBrowserDialog1.ShowDialog();
-                if (result == DialogResult.OK)
+                if (!String.IsNullOrWhiteSpace(downloadPath.Text))
                 {
-                    string FolderPath = folderBrowserDialog1.SelectedPath;
+                    string FolderPath = downloadPath.Text;
                     if (categoriesListBox.SelectedItem.ToString() != "None" && !checkBox1.Checked)
                     {
                         FolderPath += "\\" + categoriesListBox.SelectedItem.ToString().Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
@@ -143,12 +140,9 @@ namespace retrieve_files
         {
             if (categoriesListBox.SelectedIndex >= 0)
             {
-                folderBrowserDialog1.ShowNewFolderButton = true;
-                folderBrowserDialog1.Description = "Browse for a folder to save the files from the selected category.";
-                DialogResult result = folderBrowserDialog1.ShowDialog();
-                if (result == DialogResult.OK)
+                if (!String.IsNullOrWhiteSpace(downloadPath.Text))
                 {
-                    string FolderPath = folderBrowserDialog1.SelectedPath;
+                    string FolderPath = downloadPath.Text;
                     if (categoriesListBox.SelectedItem.ToString() != "None" && !checkBox1.Checked)
                     {
                         FolderPath += "\\" + categoriesListBox.SelectedItem.ToString().Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
@@ -169,15 +163,12 @@ namespace retrieve_files
 
         private async void downloadAllBtn_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog1.ShowNewFolderButton = true;
-            folderBrowserDialog1.Description = "Browse for a folder to save the files from the selected category.";
-            DialogResult result = folderBrowserDialog1.ShowDialog();
-            if (result == DialogResult.OK)
+            if (!String.IsNullOrWhiteSpace(downloadPath.Text))
             {
                 for (int j = 0; j < categories.Count; j++)
                 {
                     categoriesListBox.SelectedIndex = j;
-                    string FolderPath = folderBrowserDialog1.SelectedPath;
+                    string FolderPath = downloadPath.Text;
                     if (categories[j] != "None")
                     {
                         FolderPath += "\\" + categories[j].Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
@@ -220,6 +211,15 @@ namespace retrieve_files
             Remember.Checked = Properties.Settings.Default.Remember;
             if (Remember.Checked)
                 userKey.Text = Properties.Settings.Default.key;
+        }
+
+        private void browseBtn_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.ShowNewFolderButton = true;
+            folderBrowserDialog1.Description = "Browse for a folder to save the files.";
+            DialogResult result = folderBrowserDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+                downloadPath.Text = folderBrowserDialog1.SelectedPath;
         }
     }
 }
