@@ -1,10 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: cardo
- * Date: 10/1/2018
- * Time: 5:54 PM
- *
  * Post parameters:
  * k = user key
  * filedata = the file
