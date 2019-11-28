@@ -2,5 +2,5 @@
 from assimilator2 import *
 
 if __name__ == '__main__':
-    asm = PymwAssimilator("opus_encoder", assimilator_config.opus_output_path)
+    asm = PymwAssimilator("ffmpeg_encoder", assimilator_config.flac_output_path)
     asm.run()

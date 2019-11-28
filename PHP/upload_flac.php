@@ -31,13 +31,13 @@ echo "Use the following form to select .FLAC or .WAV files to upload to encode t
         <input name="MAX_FILE_SIZE" value="268435456" type="hidden"/>
         Browse for .FLAC or .WAV files to encode:<br/>
         <input name="files[]" type="file" multiple/><br/>
-        Category: <input type="text" name="category"><br/><br/>
+        Category: <input type="text" name="category" required><br/><br/>
         <input name="upload" type="submit" value="Upload"/>
     </p>
 </form>
 
 <?php
-if (isset($_POST['upload'])){
+if (filter_input(INPUT_POST, 'upload')){
     for ($i = 0; $i < count($_FILES['files']['name']); $i++) {
         $random_token = bin2hex(random_bytes(16));
         $file_name = $_FILES["files"]["name"][$i];
@@ -56,10 +56,7 @@ if (isset($_POST['upload'])){
                 fclose($result_template);
                 chdir($root_folder);
                 exec(return_job_string("flac_encoder", $random_token, $filename));
-                insertAudioTrack($mysqli, $user->id, $random_token . "-out.flac", $_FILES["files"]["name"][$i], "flac_encoder");
-                if (isset($_POST['category'])) {
-                    insertAlbum($mysqli, $user->id, $_POST['category'], $random_token . "-out.flac");
-                }
+                insertUserFile($mysqli, $user->id, filter_input(INPUT_POST, 'category'), $random_token, $input_file, $random_token . "-out.flac", $_FILES["files"]["name"][$i], "flac_encoder", 1);
                 rename($download_folder . $filename, $move_folder . $filename);
                 echo("Workunit for file " . $_FILES["files"]["name"][$i] . " generated</br>");
             } else {
@@ -71,4 +68,3 @@ if (isset($_POST['upload'])){
     }
 }
 page_tail();
-?>

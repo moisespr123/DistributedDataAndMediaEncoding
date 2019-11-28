@@ -52,7 +52,7 @@ namespace retrieve_files
                 {
                     formData.Add(new StringContent(key), "k");
                     formData.Add(new StringContent(filekey), "f");
-                    Uri uri = new Uri("http://boinc.moisescardona.me/download_file_post.php");
+                    Uri uri = new Uri("http://boinc.moisescardona.me/download_file.php");
                     HttpResponseMessage response = client.PostAsync(uri, formData).Result;
                     if (!response.IsSuccessStatusCode)
                     {

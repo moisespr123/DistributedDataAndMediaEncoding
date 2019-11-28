@@ -19,10 +19,10 @@ $workunit_template = "
 </file_info>";
 
 if ($picture_file)
-$workunit_template.= "
-<file_info>
-    <number>1</number>
-</file_info>";
+    $workunit_template.= "
+    <file_info>
+        <number>1</number>
+    </file_info>";
 
 $workunit_template.= "
 <workunit>
@@ -33,17 +33,17 @@ $workunit_template.= "
     </file_ref>";
 	
 if ($picture_file)
-$workunit_template.= "
-	<file_ref>
-        <file_number>1</file_number>
-        <open_name>$filename.imgfile</open_name>
-        <copy_file/>
-    </file_ref>";
+    $workunit_template.= "
+            <file_ref>
+            <file_number>1</file_number>
+            <open_name>$filename.imgfile</open_name>
+            <copy_file/>
+        </file_ref>";
 
 if ($picture_file)
-$workunit_template.= "<command_line>" . str_replace("input_image_file.imgfile", $filename . ".imgfile", $command_line) . "</command_line>";
+    $workunit_template.= "<command_line>" . str_replace("input_image_file.imgfile", $filename . ".imgfile", $command_line) . "</command_line>";
 else
-$workunit_template.="<command_line>$command_line</command_line>";
+    $workunit_template.="<command_line>$command_line</command_line>";
 
 $workunit_template.="
     <rsc_fpops_est>$fpops_est</rsc_fpops_est>
@@ -97,10 +97,10 @@ function getUser($mysqli, $key)
     }
 }
 
-function insertAudioTrack($mysqli, $user, $hash, $name, $app)
+function insertUserFile($mysqli, $user, $category, $hash, $input_file, $output_file, $output_name, $app, $type)
 {
-    $stmt = $mysqli->prepare("INSERT INTO user_media_files (user_id, random_token, filename, app) VALUES ($user, ?, ?, ?)");
-    $stmt->bind_param("sss", $hash, $name, $app);
+    $stmt = $mysqli->prepare("INSERT INTO user_media_files (user_id, category, random_token, input_file, output_file, filename, app, type) VALUES ($user, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssi", $category, $hash, $input_file, $output_file, $output_name, $app, $type);
     $stmt->execute();
     $stmt->close();
 }
@@ -123,19 +123,6 @@ function getFile($mysqli, $user, $token)
     return $results;
 }
 
-function getFileCategory($mysqli, $user, $token)
-{
-    $stmt = $mysqli->prepare("SELECT album FROM user_albums WHERE user_id=? AND hash=? ORDER BY id");
-    $stmt->bind_param("ds", $user, $token);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $stmt->close();
-    while($row = mysqli_fetch_assoc($result)){
-        return $row['album'];
-    }
-    return "None";
-}
-
 function getUserFiles($mysqli, $user)
 {
     $stmt = $mysqli->prepare("SELECT * FROM user_media_files WHERE user_id=? AND expired=0 ORDER BY id");
@@ -146,27 +133,10 @@ function getUserFiles($mysqli, $user)
     return $results;
 }
 
-function getExtensionBasedOnApp($app)
-{
-    if ($app == 'flac_encoder')
-        return ".flac";
-    else if ($app == 'opus_encoder')
-        return ".opus";
-    else
-        return ".flac";
-}
-
 function set_link_expired($mysqli, $user, $token)
 {
     $stmt = $mysqli->prepare("UPDATE user_media_files SET expired=1 WHERE user_id=? AND random_token=?");
     $stmt->bind_param("ds", $user, $token);
-    $stmt->execute();
-    $stmt->close();
-}
-function insertAlbum($mysqli, $user, $album, $filename)
-{
-    $stmt = $mysqli->prepare("INSERT INTO user_albums (user_id, album, hash) VALUES ($user, ?, ?)");
-    $stmt->bind_param("ss", $album, $filename);
     $stmt->execute();
     $stmt->close();
 }
@@ -196,15 +166,24 @@ function generate_flac_wu_template_with_cmd($random_hash, $cmd, $out, $picture)
     return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture, $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
+function generate_ffmpeg_wu_template_with_cmd($random_hash, $cmd, $out, $picture)
+{
+    global $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture, $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+}
+
 function generate_flac_result_template($random_hash)
 {
     return return_result_template($random_hash . "-out.flac");
 }
 
-function generate_opus_wu_template($random_hash, $bitrate, $out)
+function generate_opus_wu_template($random_hash, $bitrate, $enc, $out)
 {
     global $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
-    return return_wu_template($random_hash, "--music --bitrate $bitrate " . $random_hash . " " . $out . "-out.opus", false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+	if ($enc == "opus_encoder")
+            return return_wu_template($random_hash, "--music --bitrate $bitrate " . $random_hash . " " . $out . "-out.opus", false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+	else
+            return return_wu_template($random_hash, "c:a libopus -b:a $bitrate " . $random_hash . " " . $out . "-out.opus", false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
 function generate_opus_wu_template_with_cmd($random_hash, $command_line, $out, $picture)

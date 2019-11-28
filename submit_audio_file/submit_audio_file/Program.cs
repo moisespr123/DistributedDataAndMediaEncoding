@@ -109,8 +109,9 @@ namespace submit_audio_file
                     client.DefaultRequestHeaders.Add("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6,ru;q=0.4");
                     HttpResponseMessage response = client.PostAsync(uri, formData).Result;
                     if (!response.IsSuccessStatusCode)
-                    {
+                    { 
                         Console.WriteLine("Error");
+                        Console.WriteLine(response.StatusCode);
                     }
                     StreamReader reader = new StreamReader(response.Content.ReadAsStreamAsync().Result);
                     return reader.ReadToEnd();

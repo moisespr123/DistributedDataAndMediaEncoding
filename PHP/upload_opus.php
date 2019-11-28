@@ -29,12 +29,16 @@ echo "Use the following form to select .FLAC or .WAV files to upload to encode t
             <option value='256'>256</option>
             <option value='320'>320</option>
         </select> kbit/s<br/>
-        Category: <input type="text" name="category"><br/><br/>
+        <select title="Choose the encoder to use:" name='encoder'>
+            <option value='opus_encoder'>opus-tools</option>
+            <option value='ffmpeg' selected="selected">ffmpeg libopus</option>
+        </select>
+        Category: <input type="text" name="category" required><br/><br/>
         <input name="upload" type="submit" value="Upload"/>
     </p>
 </form>
 <?php
-if (isset($_POST['upload'])) {
+if (filter_input(INPUT_POST, 'upload')) {
     for ($i = 0; $i < count($_FILES['files']['name']); $i++) {
         $random_token = bin2hex(random_bytes(16));
         $file_name = $_FILES["files"]["name"][$i];
@@ -46,17 +50,14 @@ if (isset($_POST['upload'])) {
                 chmod($download_folder . $filename, 777);
                 chdir($templates_folder);
                 $wu_template = fopen($random_token . "_wu", "w");
-                fwrite($wu_template, generate_opus_wu_template($filename, $_POST['bitrate'], $random_token));
+                fwrite($wu_template, generate_opus_wu_template($filename, filter_input(INPUT_POST, 'bitrate'), filter_input(INPUT_POST, 'encoder'), $random_token));
                 fclose($wu_template);
                 $result_template = fopen($random_token . "_result", "w");
                 fwrite($result_template, generate_opus_result_template($random_token));
                 fclose($result_template);
                 chdir($root_folder);
-                exec(return_job_string("opus_encoder", $random_token, $filename));
-                insertAudioTrack($mysqli, $user->id, $random_token . "-out.opus", $_FILES["files"]["name"][$i], "opus_encoder");
-                if (isset($_POST['category'])) {
-                    insertAlbum($mysqli, $user->id, $_POST['category'], $random_token . "-out.opus");
-                }
+                exec(return_job_string(filter_input(INPUT_POST, 'encoder'), $random_token, $filename));
+                insertUserFile($mysqli, $user->id, filter_input(INPUT_POST, 'category'), $random_token, $input_file, $random_token . "-out.opus", $_FILES["files"]["name"][$i], filter_input(INPUT_POST, 'encoder'), 1);
                 rename($download_folder . $filename, $move_folder . $filename);
                 echo("Workunit for file " . $_FILES["files"]["name"][$i] . " generated</br>");
             } else {
@@ -68,4 +69,3 @@ if (isset($_POST['upload'])) {
     }
 }
 page_tail();
-?>
