@@ -170,7 +170,7 @@ function generate_opus_wu_template($random_hash, $bitrate, $enc, $out) {
     if ($enc == "opus_encoder") {
         return return_wu_template($random_hash, "--music --bitrate $bitrate " . $random_hash . " " . $out . "-out.opus", false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
     } else {
-        return return_wu_template($random_hash, "c:a libopus -b:a $bitrate " . $random_hash . " " . $out . "-out.opus", false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+        return return_wu_template($random_hash, "-i " . $random_hash . " -c:a libopus -b:a " . $bitrate . "K " . $out . "-out.opus", false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
     }
 }
 

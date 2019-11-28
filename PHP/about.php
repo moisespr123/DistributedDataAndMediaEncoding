@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cardo
- * Date: 10/2/2018
- * Time: 5:38 PM
- */
+
 // This file is part of BOINC.
 // http://boinc.berkeley.edu
 // Copyright (C) 2008 University of California

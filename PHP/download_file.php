@@ -35,8 +35,8 @@ if ($type != 0) {
             } else if ($row['app'] == 'opus_encoder') {
                 $file_path = $opus_encoder_file_path . "downloaded/" . $row['output_file'];
                 rename($opus_encoder_file_path . $result_filename, $file_path);
-            } else if ($row['app'] == 'ffmpeg') {
-                $file_path = $opus_encoder_file_path . "downloaded/" . $row['output_file'];
+            } else if ($row['app'] == 'ffmpeg_encoder') {
+                $file_path = $ffmpeg_encoder_file_path . "downloaded/" . $row['output_file'];
                 rename($ffmpeg_encoder_file_path . $result_filename, $file_path);
             } else {
                 $file_path = $other_file_path . "downloaded/" . $row['output_file'];

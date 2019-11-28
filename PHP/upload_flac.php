@@ -44,6 +44,7 @@ if (filter_input(INPUT_POST, 'upload')){
         $file_tmp = $_FILES["files"]["tmp_name"][$i];
         $ext = pathinfo($file_name, PATHINFO_EXTENSION);
         $filename = $random_token .".".$ext;
+        $output_filename = pathinfo($file_name, PATHINFO_FILENAME) . '.flac';
         if (in_array($ext, Array('flac', 'wav'))) {
             if (move_uploaded_file($file_tmp = $_FILES["files"]["tmp_name"][$i], $download_folder . $filename)) {
                 chmod($download_folder.$filename, 777);
@@ -56,14 +57,14 @@ if (filter_input(INPUT_POST, 'upload')){
                 fclose($result_template);
                 chdir($root_folder);
                 exec(return_job_string("flac_encoder", $random_token, $filename));
-                insertUserFile($mysqli, $user->id, filter_input(INPUT_POST, 'category'), $random_token, $input_file, $random_token . "-out.flac", $_FILES["files"]["name"][$i], "flac_encoder", 1);
+                insertUserFile($mysqli, $user->id, filter_input(INPUT_POST, 'category'), $random_token, $input_file, $random_token . "-out.flac", $output_filename, "flac_encoder", 1);
                 rename($download_folder . $filename, $move_folder . $filename);
-                echo("Workunit for file " . $_FILES["files"]["name"][$i] . " generated</br>");
+                echo("Workunit for file " . $file_name . " generated</br>");
             } else {
-                echo("File " . $_FILES["files"]["name"][$i] . " failed to upload</br>");
+                echo("File " . $file_name . " failed to upload</br>");
             }
         } else {
-            echo("File " . $_FILES["files"]["name"][$i] . " is not a WAV or FLAC file</br>");
+            echo("File " . $file_name . " is not a WAV or FLAC file</br>");
         }
     }
 }

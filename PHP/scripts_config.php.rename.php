@@ -13,5 +13,6 @@ $move_folder = "/location/to/store/raw/files/";
 
 $flac_encoder_file_path = "/path";
 $opus_encoder_file_path = "/path";
+$ffmpeg_encoder_file_path = "/path";
 
 $other_file_path = "/path";
