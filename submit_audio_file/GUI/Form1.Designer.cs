@@ -31,12 +31,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.PathTxt = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.opusRadioButton = new System.Windows.Forms.RadioButton();
+            this.flacRadioButton = new System.Windows.Forms.RadioButton();
             this.CategoryTxt = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ffmpegLibOpusRadioButton = new System.Windows.Forms.RadioButton();
+            this.bitrateUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.userKey = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bitrateUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -58,36 +66,37 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Controls.Add(this.ffmpegLibOpusRadioButton);
+            this.groupBox1.Controls.Add(this.opusRadioButton);
+            this.groupBox1.Controls.Add(this.flacRadioButton);
             this.groupBox1.Location = new System.Drawing.Point(12, 55);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(319, 45);
+            this.groupBox1.Size = new System.Drawing.Size(205, 45);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Format";
             // 
-            // radioButton2
+            // opusRadioButton
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(54, 16);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(48, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "opus";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.opusRadioButton.AutoSize = true;
+            this.opusRadioButton.Location = new System.Drawing.Point(54, 16);
+            this.opusRadioButton.Name = "opusRadioButton";
+            this.opusRadioButton.Size = new System.Drawing.Size(48, 17);
+            this.opusRadioButton.TabIndex = 1;
+            this.opusRadioButton.TabStop = true;
+            this.opusRadioButton.Text = "opus";
+            this.opusRadioButton.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // flacRadioButton
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 16);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(42, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "flac";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.flacRadioButton.AutoSize = true;
+            this.flacRadioButton.Location = new System.Drawing.Point(6, 16);
+            this.flacRadioButton.Name = "flacRadioButton";
+            this.flacRadioButton.Size = new System.Drawing.Size(42, 17);
+            this.flacRadioButton.TabIndex = 0;
+            this.flacRadioButton.TabStop = true;
+            this.flacRadioButton.Text = "flac";
+            this.flacRadioButton.UseVisualStyleBackColor = true;
             // 
             // CategoryTxt
             // 
@@ -107,7 +116,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 146);
+            this.button1.Location = new System.Drawing.Point(12, 184);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(319, 23);
             this.button1.TabIndex = 5;
@@ -115,12 +124,74 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.bitrateUpDown);
+            this.groupBox2.Location = new System.Drawing.Point(223, 55);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(108, 45);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Bitrate";
+            // 
+            // ffmpegLibOpusRadioButton
+            // 
+            this.ffmpegLibOpusRadioButton.AutoSize = true;
+            this.ffmpegLibOpusRadioButton.Location = new System.Drawing.Point(108, 16);
+            this.ffmpegLibOpusRadioButton.Name = "ffmpegLibOpusRadioButton";
+            this.ffmpegLibOpusRadioButton.Size = new System.Drawing.Size(93, 17);
+            this.ffmpegLibOpusRadioButton.TabIndex = 2;
+            this.ffmpegLibOpusRadioButton.TabStop = true;
+            this.ffmpegLibOpusRadioButton.Text = "ffmpeg libopus";
+            this.ffmpegLibOpusRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // bitrateUpDown
+            // 
+            this.bitrateUpDown.Location = new System.Drawing.Point(6, 19);
+            this.bitrateUpDown.Name = "bitrateUpDown";
+            this.bitrateUpDown.Size = new System.Drawing.Size(63, 20);
+            this.bitrateUpDown.TabIndex = 0;
+            this.bitrateUpDown.Value = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(72, 23);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(30, 13);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "kbps";
+            // 
+            // userKey
+            // 
+            this.userKey.Location = new System.Drawing.Point(12, 158);
+            this.userKey.Name = "userKey";
+            this.userKey.Size = new System.Drawing.Size(319, 20);
+            this.userKey.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 142);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(50, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "User Key";
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 189);
+            this.ClientSize = new System.Drawing.Size(353, 228);
+            this.Controls.Add(this.userKey);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.CategoryTxt);
             this.Controls.Add(this.label2);
@@ -133,6 +204,9 @@
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bitrateUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,11 +217,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox PathTxt;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton opusRadioButton;
+        private System.Windows.Forms.RadioButton flacRadioButton;
         private System.Windows.Forms.TextBox CategoryTxt;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RadioButton ffmpegLibOpusRadioButton;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown bitrateUpDown;
+        private System.Windows.Forms.TextBox userKey;
+        private System.Windows.Forms.Label label4;
     }
 }
 

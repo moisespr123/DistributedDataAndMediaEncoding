@@ -3,7 +3,7 @@
  * Post parameters:
  * k = user key
  * filedata = the file
- * a = album to use
+ * a = album/category
  * c = command line arguments
  * n = name
  * f = format
@@ -32,11 +32,11 @@ if (filter_input(INPUT_POST, 'k')) {
             if ($format == "opus") {
                 $filename .= "-out.opus";
                 $app = "opus_encoder";
-                fwrite($wu_template, generate_opus_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
+                fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
             } else if ($format == "opus_ffmpeg_libopus") {
                 $filename .= "-out.opus";
-                $app = "ffmpeg";
-                fwrite($wu_template, generate_opus_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
+                $app = "ffmpeg_encoder";
+                fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
             } else if ($format == "flac") {
                 $filename .= "-out.flac";
                 $app = "flac_encoder";

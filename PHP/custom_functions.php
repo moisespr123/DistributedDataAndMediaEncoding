@@ -60,7 +60,7 @@ function return_wu_template($filename, $command_line, $picture_file, $fpops_est,
 
 function return_result_template($filename) {
     return
-"<file_info>
+            "<file_info>
     <name><OUTFILE_0/></name>
     <generated_locally/>
     <upload_when_present/>
@@ -174,9 +174,13 @@ function generate_opus_wu_template($random_hash, $bitrate, $enc, $out) {
     }
 }
 
-function generate_opus_wu_template_with_cmd($random_hash, $command_line, $out, $picture) {
+function generate_opus_wu_template_with_cmd($app, $random_hash, $command_line, $out, $picture) {
     global $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
-    return return_wu_template($random_hash, $command_line . " " . $random_hash . " " . $out, $picture, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+    if ($app == "opus_encoder") {
+        return return_wu_template($random_hash, $command_line . " " . $random_hash . " " . $out, $picture, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+    } else {
+        return return_wu_template($random_hash, "-i " . $random_hash . " " . $command_line . " " . $out, false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+    }
 }
 
 function generate_opus_result_template($random_hash) {
