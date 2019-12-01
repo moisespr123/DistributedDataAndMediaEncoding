@@ -39,6 +39,7 @@ echo "Use the following form to encode files to Opus.</br></br>";
 <?php
 if (filter_input(INPUT_POST, 'upload')) {
     for ($i = 0; $i < count($_FILES['files']['name']); $i++) {
+        $category_hash = bin2hex(random_bytes(16));
         $random_token = bin2hex(random_bytes(16));
         $file_name = $_FILES["files"]["name"][$i];
         $file_tmp = $_FILES["files"]["tmp_name"][$i];
@@ -56,11 +57,11 @@ if (filter_input(INPUT_POST, 'upload')) {
                 fwrite($wu_template, generate_opus_wu_template($filename, filter_input(INPUT_POST, 'bitrate'), $encoder, $random_token));
                 fclose($wu_template);
                 $result_template = fopen($random_token . "_result", "w");
-                fwrite($result_template, generate_opus_result_template($random_token));
+                fwrite($result_template, generate_generic_result_template($random_token . "-out.opus"));
                 fclose($result_template);
                 chdir($root_folder);
                 exec(return_job_string($encoder, $random_token, $filename));
-                insertUserFile($mysqli, $user->id, filter_input(INPUT_POST, 'category'), $random_token, $filename, $random_token . "-out.opus", $output_filename, $encoder, 1);
+                insertUserFile($mysqli, $user->id, $category_hash, filter_input(INPUT_POST, 'category'), $random_token, $filename, $random_token . "-out.opus", $output_filename, $encoder, 1);
                 rename($download_folder . $filename, $move_folder . $filename);
                 echo("Workunit for file " . $file_name . " generated</br>");
             } else {

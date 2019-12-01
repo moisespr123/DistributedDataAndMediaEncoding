@@ -2,10 +2,15 @@
 
 $rsc_fpops_est = "3600000000000";
 $flac_rsc_fpops_est = "50000000000000";
-$rav1e_rsc_fpops_est = "360000000000000";
+$rav1e_rsc_fpops_est = "360000000000000000";
 $rsc_fpops_bound = "8640000000000000";
 $rsc_memory_bound = "500000000";
 $rsc_disk_bound = "1000000000";
+
+function move($source, $dest){
+    copy($source, $dest);
+    unlink($source);
+}
 
 function return_wu_template($filename, $command_line, $picture_file, $fpops_est, $fpops_bound, $memory_bound, $disk_bound) {
     $max_error_results = "10";
@@ -95,9 +100,9 @@ function getUser($mysqli, $key) {
     }
 }
 
-function insertUserFile($mysqli, $user, $category, $hash, $input_file, $output_file, $output_name, $app, $type) {
-    $stmt = $mysqli->prepare("INSERT INTO user_media_files (user_id, category, random_token, input_file, output_file, filename, app, type) VALUES ($user, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssi", $category, $hash, $input_file, $output_file, $output_name, $app, $type);
+function insertUserFile($mysqli, $user, $category_hash, $category, $hash, $input_file, $output_file, $output_name, $app, $type) {
+    $stmt = $mysqli->prepare("INSERT INTO user_media_files (user_id, category_hash, category, random_token, input_file, output_file, filename, app, type) VALUES ($user, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssi", $category_hash, $category, $hash, $input_file, $output_file, $output_name, $app, $type);
     $stmt->execute();
     $stmt->close();
 }
@@ -161,8 +166,8 @@ function generate_ffmpeg_wu_template_with_cmd($random_hash, $cmd, $out, $picture
     return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture, $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
-function generate_flac_result_template($random_hash) {
-    return return_result_template($random_hash . "-out.flac");
+function generate_generic_result_template($output_filename) {
+    return return_result_template($output_filename);
 }
 
 function generate_opus_wu_template($random_hash, $bitrate, $enc, $out) {
@@ -183,19 +188,23 @@ function generate_opus_wu_template_with_cmd($app, $random_hash, $command_line, $
     }
 }
 
-function generate_opus_result_template($random_hash) {
-    return return_result_template($random_hash . "-out.opus");
-}
-
-function generate_put_result_template($random_hash) {
-    return return_result_template($random_hash);
+function generate_av1_wu_template($filename, $quantizer, $enc, $out) {
+    global $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    if ($enc == "rav1e_encoder") {
+        return return_wu_template($filename, $filename . " -o " . $out . " --quantizer " . $quantizer . " -s 0 -i 99999 -I 99999" , false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+    } else {
+        return return_wu_template($filename, "-enc-mode 0 -q " . $quantizer . " -i " . $filename . " -b " . $out, false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+    }
 }
 
 function generate_wu_general_template_cmd($input_file, $command_line) {
     return return_wu_template($input_file, $command_line, false);
 }
 
-function generate_wu_rav1e_template_cmd($input_file, $command_line) {
+//I'll deprecate this later
+function generate_wu_av1_template_cmd($app, $input_file, $command_line) {
     global $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
-    return return_wu_template($input_file, $command_line, false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+    if ($app == "rav1e_encoder"){
+        return return_wu_template($input_file, $command_line, false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+    }
 }

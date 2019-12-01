@@ -14,6 +14,7 @@ global $mysqli;
 if (filter_input(INPUT_POST, 'k')) {
     $user_id = getUser($mysqli, filter_input(INPUT_POST, 'k'));
     if ($user_id != 0) {
+        $category_hash = bin2hex(random_bytes(16));
         $random_token = bin2hex(random_bytes(16));
         $ext = pathinfo($_FILES['filedata']['name'])['extension'];
         $input_file = $random_token . "." . $ext;
@@ -42,14 +43,14 @@ if (filter_input(INPUT_POST, 'k')) {
                 $app = "flac_encoder";
                 fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
             }
-            fwrite($result_template, generate_put_result_template($filename));
+            fwrite($result_template, generate_generic_result_template($filename));
             $job_creation_command = return_job_string_multiple_files($app, $random_token, $filenames);
             fclose($wu_template);
             fclose($result_template);
             chdir($root_folder);
             exec($job_creation_command);
             $category = "";
-            insertUserFile($mysqli, $user_id, filter_input(INPUT_POST, 'a'), $random_token, $input_file, $filename, filter_input(INPUT_POST, 'n'), $app, 1);
+            insertUserFile($mysqli, $user_id, $category_hash, filter_input(INPUT_POST, 'a'), $random_token, $input_file, $filename, filter_input(INPUT_POST, 'n'), $app, 1);
             rename($download_folder . $input_file, $move_folder . $input_file);
             if (isset($_FILES['picture'])) {
                 rename($download_folder . $input_file . ".imgfile", $move_folder . $input_file . ".imgfile");

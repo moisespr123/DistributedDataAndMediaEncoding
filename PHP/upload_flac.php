@@ -39,6 +39,7 @@ echo "Use the following form to select .FLAC or .WAV files to upload to encode t
 <?php
 if (filter_input(INPUT_POST, 'upload')){
     for ($i = 0; $i < count($_FILES['files']['name']); $i++) {
+        $category_hash = bin2hex(random_bytes(16));
         $random_token = bin2hex(random_bytes(16));
         $file_name = $_FILES["files"]["name"][$i];
         $file_tmp = $_FILES["files"]["tmp_name"][$i];
@@ -53,11 +54,11 @@ if (filter_input(INPUT_POST, 'upload')){
                 fwrite($wu_template, generate_flac_wu_template($random_token.".".$ext, $random_token));
                 fclose($wu_template);
                 $result_template = fopen($random_token . "_result", "w");
-                fwrite($result_template, generate_flac_result_template($random_token));
+                fwrite($result_template, generate_generic_result_template($random_token . "-out.flac"));
                 fclose($result_template);
                 chdir($root_folder);
                 exec(return_job_string("flac_encoder", $random_token, $filename));
-                insertUserFile($mysqli, $user->id, filter_input(INPUT_POST, 'category'), $random_token, $input_file, $random_token . "-out.flac", $output_filename, "flac_encoder", 1);
+                insertUserFile($mysqli, $user->id, $category_hash, filter_input(INPUT_POST, 'category'), $random_token, $input_file, $random_token . "-out.flac", $output_filename, "flac_encoder", 1);
                 rename($download_folder . $filename, $move_folder . $filename);
                 echo("Workunit for file " . $file_name . " generated</br>");
             } else {
