@@ -87,7 +87,6 @@ if (filter_input(INPUT_POST, 'upload')) {
                         exec(return_job_string($encoder, $random_token_2, $av1_chunk_filename));
                         insertUserFile($mysqli, $user->id, $category_hash, $av1_output_filename, $random_token_2, $av1_chunk_filename, $av1_chunk_output_filename, "Chunk " . strval($counter), $encoder, 4);
                         move($download_folder . $av1_chunk_filename, $move_folder . $av1_chunk_filename);
-                        
                     }
                     
                     //submit opus job
@@ -96,6 +95,9 @@ if (filter_input(INPUT_POST, 'upload')) {
                     exec(return_job_string("ffmpeg_encoder", $random_token, $filename));
                     insertUserFile($mysqli, $user->id, $category_hash, $av1_output_filename, $random_token, $filename, $random_token . "-out.opus", "Audio Track", "ffmpeg_encoder", 3);
                     move($download_folder . $filename, $move_folder . $filename);
+                    
+                    // Finally, add the output file to the table
+                    insertUserFile($mysqli, $user->id, $category_hash, $av1_output_filename, $category_hash, $category_hash . ".webm",  $category_hash . ".webm", $av1_output_filename . ".webm", "av1_generic", 2);
                     
                     echo("Workunit for file " . $file_name . " generated.</br>");
                     echo("There are " . strval($counter) . " chunks to encode. You can see the progress in the Media Files list");
