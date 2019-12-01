@@ -1,6 +1,7 @@
 import assimilator_config
 import MySQLdb
 from assimilators import *
+from av1_assimilator import av1_assimilator
 from database_functions import *
 
 
@@ -15,7 +16,9 @@ app_specific_dict = {'ffmpeg_encoder': {'wu_get': generic_wu_basename_select,
                      'opus_encoder': {'wu_get': generic_wu_basename_select,
                                       'assimilator': generic_assimilator, },
                      'rav1e_encoder': {'wu_get': generic_wu_basename_select,
-                                       'assimilator': generic_assimilator, }
+                                       'assimilator': av1_assimilator, },
+                     'svt_av1_encoder': {'wu_get': generic_wu_basename_select,
+                                       'assimilator': av1_assimilator, }
                      }
 
 

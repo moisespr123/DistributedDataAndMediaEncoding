@@ -23,3 +23,21 @@ def database_select(wu_basename, query):
     conn.close()
     cursor.close()
     return wu
+
+
+def database_select_multi(wu_basename, query):
+    conn = get_sql_connection()
+    cursor = conn.cursor()
+    cursor.execute(query % (wu_basename))
+    results = cursor.fetchall()
+    conn.close()
+    cursor.close()
+    return results
+
+
+def insert_record(query):
+    conn = get_sql_connection()
+    cursor = conn.cursor()
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
