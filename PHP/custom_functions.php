@@ -2,8 +2,8 @@
 
 $rsc_fpops_est = "3600000000000";
 $flac_rsc_fpops_est = "50000000000000";
-$rav1e_rsc_fpops_est = "360000000000000000";
-$rsc_fpops_bound = "8640000000000000";
+$rav1e_rsc_fpops_est = "99999999999999999999999999999999";
+$rsc_fpops_bound = "99999999999999999999999999999999";
 $rsc_memory_bound = "500000000";
 $rsc_disk_bound = "1000000000";
 
