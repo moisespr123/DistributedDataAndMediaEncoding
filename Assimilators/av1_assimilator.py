@@ -53,7 +53,7 @@ def av1_assimilator(wu_basename):
                          path_dict[app]["ffmpeg_concatenate_path"] + '/output/' +
                          category_hash + ".webm", '-y'])
 
-        if os.path.exists(path_dict[app]["ffmpeg_concatenate_path"] + '/output/' +
+        if os.path.exists(path_dict[app]["output_path"] + '/output/' +
                           category_hash + ".webm"):
             # Finally, we'll mark te file as processed in the table if the file exist.
             update_database(category_hash,
@@ -61,5 +61,8 @@ def av1_assimilator(wu_basename):
 
             # Time for cleanup!
             for output_filename in output_filenames:
-                os.remove(path_dict[app]["ffmpeg_concatenate_path"] + "/" + output_filename)
-            os.remove(assimilator_config.ffmpeg_output_path_prefix + '/' + audio_file)
+                if str(output_filename).endswith(".ivf"):
+                    file_to_remove = path_dict[app]["output_path"] + "/" + output_filename
+                    if os.path.exists(file_to_remove):
+                        os.remove(file_to_remove)
+            os.remove(assimilator_config.ffmpeg_output_path + '/' + audio_file)
