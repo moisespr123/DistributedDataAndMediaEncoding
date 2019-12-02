@@ -2,14 +2,51 @@
 
 $rsc_fpops_est = "3600000000000";
 $flac_rsc_fpops_est = "50000000000000";
-$rav1e_rsc_fpops_est = "99999999999999999999999999999999";
+$rav1e_rsc_fpops_est = "3600000000000";
 $rsc_fpops_bound = "99999999999999999999999999999999";
 $rsc_memory_bound = "500000000";
 $rsc_disk_bound = "1000000000";
 
-function move($source, $dest){
+function move($source, $dest) {
     copy($source, $dest);
     unlink($source);
+}
+
+function return_wu_template_multi_files($filenames, $command_line, $fpops_est, $fpops_bound, $memory_bound, $disk_bound) {
+    $max_error_results = "10";
+    $max_total_results = "40";
+
+    $counter = 0;
+    $workunit_template = "";
+    foreach ($filenames as $filename) {
+        $workunit_template .= "<file_info>
+    <number>" . strval($counter) . "</number>
+</file_info>\n";
+        $counter++;
+    }
+    $workunit_template .= "<workunit>";
+    $counter = 0;
+    foreach ($filenames as $filename) {
+        $workunit_template .= "
+    <file_ref>
+        <file_number>" . strval($counter) . "</file_number>
+        <open_name>$filename</open_name>
+        <copy_file/>
+    </file_ref>";
+         $counter++;
+    }
+    $workunit_template .= "
+    <command_line>$command_line</command_line>
+    <rsc_fpops_est>$fpops_est</rsc_fpops_est>
+    <rsc_fpops_bound>$fpops_bound</rsc_fpops_bound>
+    <rsc_memory_bound>$memory_bound</rsc_memory_bound>
+    <rsc_disk_bound>$disk_bound</rsc_disk_bound>
+    <min_quorum>1</min_quorum>
+    <target_nresults>1</target_nresults>
+    <max_error_results>$max_error_results</max_error_results>
+    <max_total_results>$max_total_results</max_total_results>
+</workunit>";
+    return $workunit_template;
 }
 
 function return_wu_template($filename, $command_line, $picture_file, $fpops_est, $fpops_bound, $memory_bound, $disk_bound) {
@@ -188,12 +225,28 @@ function generate_opus_wu_template_with_cmd($app, $random_hash, $command_line, $
     }
 }
 
-function generate_av1_wu_template($filename, $quantizer, $enc, $out) {
+function generate_av1_wu_template($filename, $quantizer, $enc, $out, $twopass, $passnumber) {
     global $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
     if ($enc == "rav1e_encoder") {
-        return return_wu_template($filename, $filename . " -o " . $out . " --quantizer " . $quantizer . " -s 0 -i 99999 -I 99999" , false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+        if (!$twopass) {
+            return return_wu_template($filename, $filename . " -o " . $out . " --quantizer " . $quantizer . " -s 0 -i 99999 -I 99999", false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+        } else {
+            if ($passnumber == 1) {
+                return return_wu_template($filename, $filename . " --first-pass " . $out[0] . " -o " . $out[1] . " --quantizer " . $quantizer . " -s 0 -i 99999 -I 99999", false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+            } else {
+                return return_wu_template_multi_files($filename, $filename[0] . " --second-pass " . $filename[1] . " -o " . $out . " --quantizer " . $quantizer . " -s 0 -i 99999 -I 99999", $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+            }
+        }
     } else {
-        return return_wu_template($filename, "-enc-mode 0 -q " . $quantizer . " -i " . $filename . " -b " . $out, false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+        if (!$twopass) {
+            return return_wu_template($filename, "-enc-mode-2p 0 -enc-mode 0 -q " . $quantizer . " -i " . $filename . " -b " . $out, false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+        } else {
+            if ($passnumber == 1) {
+                return return_wu_template($filename, "-enc-mode-2p 0 -enc-mode 0 -q " . $quantizer . " -i " . $filename . " -output-stat-file " . $out[0], false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+            } else {
+                return return_wu_template_multi_files($filename, "-enc-mode-2p 0 -enc-mode 0 -q " . $quantizer . " -i " . $filename[0] . " -input-stat-file " . $filename[1] . " -b " . $out, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+            }
+        }
     }
 }
 
@@ -204,7 +257,7 @@ function generate_wu_general_template_cmd($input_file, $command_line) {
 //I'll deprecate this later
 function generate_wu_av1_template_cmd($app, $input_file, $command_line) {
     global $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
-    if ($app == "rav1e_encoder"){
+    if ($app == "rav1e_encoder") {
         return return_wu_template($input_file, $command_line, false, $rav1e_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
     }
 }

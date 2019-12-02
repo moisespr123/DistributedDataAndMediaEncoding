@@ -16,9 +16,10 @@ echo "Use the following form to upload a video file to encode to AV1.</br></br>"
         <input name="files[]" type="file" multiple><br/><br/>
         Choose the encoder to use:<br/>
         <input name="encoder" type="radio" value='rav1e_encoder'>rav1e<br/>
-        <input name="encoder" type="radio" value='svt_av1_encoder' checked>SVT-AV1<br/></br>
+        <input name="encoder" type="radio" value='svt_av1_encoder' checked>SVT-AV1<br/><br/>
         Quantizer setting:<br/>
         <input type="text" name="quantizer" required><br/><br/>
+        <input type="checkbox" name="twopass" value="enabled" checked> Two Pass Encoding.<br/><br/>
         Enter a name for this job: <input type="text" name="category" required><br/><br/>
         <input name="upload" type="submit" value="Upload"/>
     </p>
@@ -35,6 +36,7 @@ if (filter_input(INPUT_POST, 'upload')) {
         $encoder = filter_input(INPUT_POST, 'encoder');
         $av1_output_filename = filter_input(INPUT_POST, 'category');
         $quantizer = intval(filter_input(INPUT_POST, 'quantizer'));
+        $twopass = filter_input(INPUT_POST, 'twopass');
         if ($quantizer < 1 && $quantizer > 255 && $encoder == 'rav1e_encoder') {
             echo("Quantizer setting for rav1e should be between 1 and 255.</br>");
         } else if ($quantizer < 1 && $quantizer > 63 && $encoder == 'svt_av1_encoder') {
@@ -72,21 +74,54 @@ if (filter_input(INPUT_POST, 'upload')) {
 
                         //randomize the filename
                         $random_token_2 = bin2hex(random_bytes(16));
+                        $random_token_twopass = bin2hex(random_bytes(16));
                         $av1_chunk_filename_no_extension = sprintf('%07d', $counter) . "-" . $random_token_2;
                         $av1_chunk_filename = $av1_chunk_filename_no_extension . ".y4m";
                         $av1_chunk_output_filename = $av1_chunk_filename_no_extension . "-out.ivf";
                         move($y4m_file, $download_folder . $av1_chunk_filename);
 
                         //av1 workunit creation
-                        $av1_wu_template = fopen($templates_folder . "/" . $random_token_2 . "_wu", "w");
-                        fwrite($av1_wu_template, generate_av1_wu_template($av1_chunk_filename, $quantizer, $encoder, $av1_chunk_output_filename));
-                        fclose($av1_wu_template);
-                        $av1_result_template = fopen($templates_folder . "/" . $random_token_2 . "_result", "w");
-                        fwrite($av1_result_template, generate_generic_result_template($av1_chunk_output_filename));
-                        fclose($av1_result_template);
-                        exec(return_job_string($encoder, $random_token_2, $av1_chunk_filename));
-                        insertUserFile($mysqli, $user->id, $category_hash, $av1_output_filename, $random_token_2, $av1_chunk_filename, $av1_chunk_output_filename, "Chunk " . strval($counter), $encoder, 4);
-                        move($download_folder . $av1_chunk_filename, $move_folder . $av1_chunk_filename);
+                      
+                        if (empty($twopass)){
+                            $av1_wu_template = fopen($templates_folder . "/" . $random_token_2 . "_wu", "w");
+                            fwrite($av1_wu_template, generate_av1_wu_template($av1_chunk_filename, $quantizer, $encoder, $av1_chunk_output_filename, false, 0));
+                            fclose($av1_wu_template);
+                            $av1_result_template = fopen($templates_folder . "/" . $random_token_2 . "_result", "w");
+                            fwrite($av1_result_template, generate_generic_result_template($av1_chunk_output_filename));
+                            fclose($av1_result_template);
+                            exec(return_job_string($encoder, $random_token_2, $av1_chunk_filename));
+                            insertUserFile($mysqli, $user->id, $category_hash, $av1_output_filename, $random_token_2, $av1_chunk_filename, $av1_chunk_output_filename, "Chunk " . strval($counter), $encoder, 4);
+                            move($download_folder . $av1_chunk_filename, $move_folder . $av1_chunk_filename);
+                        }
+                        else{
+                            $av1_firstpass_output_filename = $av1_chunk_filename_no_extension . ".firstpass";
+                            
+                            // WU template for first pass
+                            $av1_wu_template = fopen($templates_folder . "/" . $random_token_2 . "_wu", "w");
+                            fwrite($av1_wu_template, generate_av1_wu_template($av1_chunk_filename, $quantizer, $encoder, array($av1_firstpass_output_filename, $av1_chunk_output_filename), true, 1));
+                            fclose($av1_wu_template);
+                            $av1_result_template = fopen($templates_folder . "/" . $random_token_2 . "_result", "w");
+                            fwrite($av1_result_template, generate_generic_result_template($av1_firstpass_output_filename));
+                            fclose($av1_result_template);
+                            
+                            // WU template for second pass
+                            $av1_wu_template_2pass = fopen($templates_folder . "/" . $random_token_twopass . "_wu", "w");
+                            fwrite($av1_wu_template_2pass, generate_av1_wu_template(array($av1_chunk_filename, $av1_firstpass_output_filename), $quantizer, $encoder, $av1_chunk_output_filename, true, 2));
+                            fclose($av1_wu_template_2pass);
+                            $av1_result_template_2pass = fopen($templates_folder . "/" . $random_token_twopass . "_result", "w");
+                            fwrite($av1_result_template_2pass, generate_generic_result_template($av1_chunk_output_filename));
+                            fclose($av1_result_template_2pass);
+                            
+                            // Submit first pass WU
+                            exec(return_job_string($encoder, $random_token_2, $av1_chunk_filename));
+                            
+                            // Add entries to database table
+                            insertUserFile($mysqli, $user->id, $category_hash, $av1_output_filename, $random_token_2, $av1_chunk_filename, $av1_firstpass_output_filename, "First Pass Chunk " . strval($counter), $encoder, 5);
+                            insertUserFile($mysqli, $user->id, $category_hash, $av1_output_filename, $random_token_twopass, $av1_chunk_filename, $av1_chunk_output_filename, "Second Pass Chunk " . strval($counter), $encoder, 4);
+                            
+                            // Move file to RAW folder
+                            move($download_folder . $av1_chunk_filename, $move_folder . $av1_chunk_filename);
+                        }
                     }
                     
                     //submit opus job
