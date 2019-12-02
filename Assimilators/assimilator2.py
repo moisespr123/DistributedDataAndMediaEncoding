@@ -56,8 +56,6 @@ class PymwAssimilator(Assimilator):
                 templates = glob.glob(assimilator_config.templates_path + template_base_name + "*")
                 for template in templates:
                     os.remove(template)
-                if self.appname in assimilator_config.delete_raw_files:
-                   assimilator_functions.delete_raw_files(template_base_name)
                 os.chmod(dest, 0777)
                 assimilator_functions.assimilate(self.appname, template_base_name)
 
