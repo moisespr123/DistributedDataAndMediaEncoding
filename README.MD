@@ -34,6 +34,3 @@ See README.MD in the folder for more information and usage.
 This is a Windows Forms software written in C# that allows you to download the result files from your submitted tasks. It lists the categories (if you added one) and your files. Simply, select a category or files to download them.
 
 See README.MD in the folder for more information and usage.
-
-## av1_task_generator
-This is a Windows Forms software written in Visual Basic .NET that will create rav1e tasks to distribute on a BOINC Server. Also included is the av1_merge utility to merge the result files and generate the final WebM file.
