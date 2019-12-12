@@ -32,12 +32,16 @@ if ($type != 0) {
             if ($row['app'] == 'flac_encoder') {
                 $file_path = $flac_encoder_file_path . "downloaded/" . $row['output_file'];
                 rename($flac_encoder_file_path . $result_filename, $file_path);
-            } else if ($row['app'] == 'opus_encoder') {
-                $file_path = $opus_encoder_file_path . "downloaded/" . $row['output_file'];
-                rename($opus_encoder_file_path . $result_filename, $file_path);
             } else if ($row['app'] == 'ffmpeg_encoder') {
                 $file_path = $ffmpeg_encoder_file_path . "downloaded/" . $row['output_file'];
                 rename($ffmpeg_encoder_file_path . $result_filename, $file_path);
+            } else if ($row['app'] == 'mp3packer') {
+                $file_path = $mp3packer_file_path . "downloaded/" . $row['output_file'];
+                rename($mp3packer_file_path . $result_filename, $file_path);
+            } else if ($row['app'] == 'opus_encoder') {
+                $file_path = $opus_encoder_file_path . "downloaded/" . $row['output_file'];
+                rename($opus_encoder_file_path . $result_filename, $file_path);
+           
             } else {
                 $file_path = $other_file_path . "downloaded/" . $row['output_file'];
                 rename($other_file_path . $result_filename, $file_path);

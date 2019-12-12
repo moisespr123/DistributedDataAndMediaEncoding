@@ -30,7 +30,11 @@ if (filter_input(INPUT_POST, 'k')) {
             $filename = $random_token;
             $wu_template = fopen($random_token . "_wu", "w");
             $result_template = fopen($random_token . "_result", "w");
-            if ($format == "opus") {
+            if ($format == "mp3packer") {
+                $filename .= "-out.mp3";
+                $app = "mp3packer";
+                fwrite($wu_template, generate_mp3packer_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename));
+            } else if ($format == "opus") {
                 $filename .= "-out.opus";
                 $app = "opus_encoder";
                 fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
@@ -38,6 +42,7 @@ if (filter_input(INPUT_POST, 'k')) {
                 $filename .= "-out.opus";
                 $app = "ffmpeg_encoder";
                 fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
+                
             } else if ($format == "flac") {
                 $filename .= "-out.flac";
                 $app = "flac_encoder";

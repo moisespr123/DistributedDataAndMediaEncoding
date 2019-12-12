@@ -15,6 +15,7 @@ $temp_folder = "/location/to/temp/folder";
 $windows_temp_folder = "C:/temp";
 
 $flac_encoder_file_path = "/path";
+$mp3packer_file_path = "/path";
 $opus_encoder_file_path = "/path";
 $ffmpeg_encoder_file_path = "/path";
 

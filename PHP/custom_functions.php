@@ -160,6 +160,15 @@ function getFile($mysqli, $user, $token) {
     return $results;
 }
 
+function getUserCategories($mysqli, $user) {
+    $stmt = $mysqli->prepare("SELECT category FROM user_media_files WHERE type=1 OR type=2 AND expired=0 ORDER BY id");
+    $stmt->bind_param("d", $user);
+    $stmt->execute();
+    $results = $stmt->get_result();
+    $stmt->close();
+    return $results;
+}
+
 function getUserFiles($mysqli, $user) {
     $stmt = $mysqli->prepare("SELECT * FROM user_media_files WHERE user_id=? AND expired=0 ORDER BY id");
     $stmt->bind_param("d", $user);
@@ -194,13 +203,18 @@ function generate_flac_wu_template($random_hash, $out) {
 }
 
 function generate_flac_wu_template_with_cmd($random_hash, $cmd, $out, $picture) {
-    global $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
-    return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture, $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+    global $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+}
+
+function generate_mp3packer_wu_template_with_cmd($random_hash, $cmd, $out) {
+    global $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    return return_wu_template($random_hash, $cmd . " " . $random_hash . " " . $out, false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
 function generate_ffmpeg_wu_template_with_cmd($random_hash, $cmd, $out, $picture) {
     global $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
-    return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture, $flac_rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+    return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
 function generate_generic_result_template($output_filename) {
