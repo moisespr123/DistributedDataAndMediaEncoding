@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO;
 using System.Net.Http;
@@ -20,6 +19,7 @@ namespace GUI
         {
             Dictionary<string, List<string>> extensionsDict = new Dictionary<string, List<string>>();
             extensionsDict.Add("flac", new List<string> { ".flac", ".wav" });
+            extensionsDict.Add("mp3packer", new List<string> { ".mp3" });
             extensionsDict.Add("opus", new List<string> { ".flac", ".wav" });
             extensionsDict.Add("opus_ffmpeg_libopus", new List<string> { ".flac", ".mp3", ".m4a", ".wav" });
             if (extensionsDict[encoder].Contains(Path.GetExtension(file)))
@@ -32,15 +32,16 @@ namespace GUI
         {
             Dictionary<string, string> extensionsDict = new Dictionary<string, string>();
             extensionsDict.Add("flac", ".flac");
+            extensionsDict.Add("mp3packer", ".mp3");
             extensionsDict.Add("opus", ".opus");
             extensionsDict.Add("opus_ffmpeg_libopus", ".opus");
             return Path.GetFileNameWithoutExtension(file) + extensionsDict[encoder];
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            string[] items = System.IO.Directory.GetFiles(PathTxt.Text);
-            string encoder = "";
-            string commandline = "";
+            string[] items = Directory.GetFiles(PathTxt.Text);
+            string encoder;
+            string commandline;
             if (flacRadioButton.Checked)
             {
                 encoder = "flac";
@@ -50,6 +51,11 @@ namespace GUI
             {
                 encoder = "opus";
                 commandline = "--music --bitrate " + bitrateUpDown.Value.ToString();
+            }
+            else if (mp3packer.Checked)
+            {
+                encoder = "mp3packer";
+                commandline = "-z -R --nice 0";
             }
             else
             {
