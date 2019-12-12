@@ -41,7 +41,7 @@ def generate_2pass_wu(wu_basename, app):
 
 
 def av1_assimilator(wu_basename):
-    update_database(wu_basename, "UPDATE user_media_files SET processed=1 WHERE random_token='%s'")
+    update_database(wu_basename, "UPDATE user_media_files SET processed=1, expired=1 WHERE random_token='%s'")
     category_hash, app, wu_type = database_select_multi(wu_basename,
                                                         "SELECT category_hash, app, type FROM user_media_files "
                                                         "WHERE random_token='%s'")[0]
