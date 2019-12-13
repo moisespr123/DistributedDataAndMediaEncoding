@@ -33,7 +33,7 @@ if (filter_input(INPUT_POST, 'k')) {
             if ($format == "mp3packer") {
                 $filename .= "-out.mp3";
                 $app = "mp3packer";
-                fwrite($wu_template, generate_mp3packer_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename));
+                fwrite($wu_template, generate_mp3packer_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename));
             } else if ($format == "opus") {
                 $filename .= "-out.opus";
                 $app = "opus_encoder";
