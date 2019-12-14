@@ -64,7 +64,7 @@ namespace GUI
             }
             foreach (string item in items)
             {
-                if (validateFile(encoder, item))
+                if (validateFile(encoder, item.ToLower()))
                     Upload(userKey.Text.Trim(), encoder, commandline, returnOutputExtension(encoder, item), CategoryTxt.Text, item);
             }
             MessageBox.Show("File(s) submitted");
