@@ -31,6 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.PathTxt = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.mp3packer = new System.Windows.Forms.RadioButton();
             this.ffmpegLibOpusRadioButton = new System.Windows.Forms.RadioButton();
             this.opusRadioButton = new System.Windows.Forms.RadioButton();
             this.flacRadioButton = new System.Windows.Forms.RadioButton();
@@ -42,7 +43,6 @@
             this.bitrateUpDown = new System.Windows.Forms.NumericUpDown();
             this.userKey = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.mp3packer = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bitrateUpDown)).BeginInit();
@@ -78,6 +78,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Format";
             // 
+            // mp3packer
+            // 
+            this.mp3packer.AutoSize = true;
+            this.mp3packer.Location = new System.Drawing.Point(6, 39);
+            this.mp3packer.Name = "mp3packer";
+            this.mp3packer.Size = new System.Drawing.Size(78, 17);
+            this.mp3packer.TabIndex = 3;
+            this.mp3packer.TabStop = true;
+            this.mp3packer.Text = "mp3packer";
+            this.mp3packer.UseVisualStyleBackColor = true;
+            this.mp3packer.CheckedChanged += new System.EventHandler(this.mp3packer_CheckedChanged);
+            // 
             // ffmpegLibOpusRadioButton
             // 
             this.ffmpegLibOpusRadioButton.AutoSize = true;
@@ -88,6 +100,7 @@
             this.ffmpegLibOpusRadioButton.TabStop = true;
             this.ffmpegLibOpusRadioButton.Text = "ffmpeg libopus";
             this.ffmpegLibOpusRadioButton.UseVisualStyleBackColor = true;
+            this.ffmpegLibOpusRadioButton.CheckedChanged += new System.EventHandler(this.ffmpegLibOpusRadioButton_CheckedChanged);
             // 
             // opusRadioButton
             // 
@@ -99,6 +112,7 @@
             this.opusRadioButton.TabStop = true;
             this.opusRadioButton.Text = "opus";
             this.opusRadioButton.UseVisualStyleBackColor = true;
+            this.opusRadioButton.CheckedChanged += new System.EventHandler(this.opusRadioButton_CheckedChanged);
             // 
             // flacRadioButton
             // 
@@ -110,6 +124,7 @@
             this.flacRadioButton.TabStop = true;
             this.flacRadioButton.Text = "flac";
             this.flacRadioButton.UseVisualStyleBackColor = true;
+            this.flacRadioButton.CheckedChanged += new System.EventHandler(this.flacRadioButton_CheckedChanged);
             // 
             // CategoryTxt
             // 
@@ -163,11 +178,7 @@
             this.bitrateUpDown.Name = "bitrateUpDown";
             this.bitrateUpDown.Size = new System.Drawing.Size(63, 20);
             this.bitrateUpDown.TabIndex = 0;
-            this.bitrateUpDown.Value = new decimal(new int[] {
-            64,
-            0,
-            0,
-            0});
+            this.bitrateUpDown.ValueChanged += new System.EventHandler(this.bitrateUpDown_ValueChanged);
             // 
             // userKey
             // 
@@ -175,6 +186,7 @@
             this.userKey.Name = "userKey";
             this.userKey.Size = new System.Drawing.Size(319, 20);
             this.userKey.TabIndex = 7;
+            this.userKey.TextChanged += new System.EventHandler(this.userKey_TextChanged);
             // 
             // label4
             // 
@@ -184,17 +196,6 @@
             this.label4.Size = new System.Drawing.Size(50, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "User Key";
-            // 
-            // mp3packer
-            // 
-            this.mp3packer.AutoSize = true;
-            this.mp3packer.Location = new System.Drawing.Point(6, 39);
-            this.mp3packer.Name = "mp3packer";
-            this.mp3packer.Size = new System.Drawing.Size(78, 17);
-            this.mp3packer.TabIndex = 3;
-            this.mp3packer.TabStop = true;
-            this.mp3packer.Text = "mp3packer";
-            this.mp3packer.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -211,8 +212,10 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.PathTxt);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Audio Submitter GUI";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.groupBox1.ResumeLayout(false);

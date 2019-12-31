@@ -113,5 +113,50 @@ namespace GUI
             }
         }
 
+        private void userKey_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.UserKey = userKey.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void flacRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.FlacSelected = flacRadioButton.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void opusRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.OpusSelected = opusRadioButton.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void ffmpegLibOpusRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.LibOpusSelected = ffmpegLibOpusRadioButton.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void mp3packer_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.mp3packerSelected = mp3packer.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void bitrateUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Bitrate = bitrateUpDown.Value;
+            Properties.Settings.Default.Save();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            userKey.Text = Properties.Settings.Default.UserKey;
+            flacRadioButton.Checked = Properties.Settings.Default.FlacSelected;
+            opusRadioButton.Checked = Properties.Settings.Default.OpusSelected;
+            ffmpegLibOpusRadioButton.Checked = Properties.Settings.Default.LibOpusSelected;
+            mp3packer.Checked = Properties.Settings.Default.mp3packerSelected;
+            bitrateUpDown.Value = Properties.Settings.Default.Bitrate;
+        }
     }
 }
