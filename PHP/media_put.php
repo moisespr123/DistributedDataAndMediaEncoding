@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Post parameters:
  * k = user key
@@ -16,7 +17,7 @@ if (filter_input(INPUT_POST, 'k')) {
     if ($user_id != 0) {
         $category_hash = bin2hex(random_bytes(16));
         $random_token = bin2hex(random_bytes(16));
-        $ext = pathinfo($_FILES['filedata']['name'])['extension'];
+        $ext = (new SplFileInfo($_FILES['filedata']['name']))->getExtension();
         $input_file = $random_token . "." . $ext;
         $filenames[] = $input_file;
         if (move_uploaded_file($_FILES["filedata"]["tmp_name"], $download_folder . $input_file)) {
@@ -42,11 +43,21 @@ if (filter_input(INPUT_POST, 'k')) {
                 $filename .= "-out.opus";
                 $app = "ffmpeg_encoder";
                 fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
-                
             } else if ($format == "flac") {
                 $filename .= "-out.flac";
                 $app = "flac_encoder";
                 fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
+            } else if ($format == "paq8px_v185") {
+                $app = "paq8px_v185";
+                $commandLineArgs = filter_input(INPUT_POST, 'c');
+                if ($commandLineArgs == '-d') {
+                    $filename = (new SplFileInfo($input_file))->getBasename($ext);
+                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename2, isset($_FILES["picture"])));
+                } else {
+                    $filename2 = $filename . "-out";
+                    $filename = $filename2 . ".paq8px185";
+                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename2, isset($_FILES["picture"])));
+                }
             }
             fwrite($result_template, generate_generic_result_template($filename));
             $job_creation_command = return_job_string_multiple_files($app, $random_token, $filenames);
@@ -67,7 +78,6 @@ if (filter_input(INPUT_POST, 'k')) {
     } else {
         echo "Incorrect User Key";
     }
-}
-else{
+} else {
     echo "Invalid Request";
 }
