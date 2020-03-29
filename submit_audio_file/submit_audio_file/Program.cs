@@ -61,6 +61,21 @@ namespace submit_audio_file
                 else
                     filename = Path.GetFileNameWithoutExtension(source) + ".opus";
             }
+            else if (format == "ffmpeg_libopus")
+            {
+                string[] parsed_args = parse_opus_args.parse_args(argv);
+                commandline = parsed_args[0]; 
+                trackname = parsed_args[1];
+                tracknumber = parsed_args[2];
+                album = parsed_args[3];
+                artist = parsed_args[4];
+                picturefile = parsed_args[5];
+                source = parsed_args[6];
+                if (!string.IsNullOrEmpty(tracknumber) && !string.IsNullOrEmpty(trackname))
+                    filename = string.Format("{0:00}", Convert.ToInt32(tracknumber)) + " - " + trackname + ".opus";
+                else
+                    filename = Path.GetFileNameWithoutExtension(source) + ".opus";
+            }
             if (File.Exists(source))
             {
                 string result = Upload(argv[0], format, commandline, filename, artist, album, picturefile, source);

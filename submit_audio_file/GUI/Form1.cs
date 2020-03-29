@@ -42,6 +42,7 @@ namespace GUI
             string[] items = Directory.GetFiles(PathTxt.Text);
             string encoder;
             string commandline;
+            string category = CategoryTxt.Text;
             if (flacRadioButton.Checked)
             {
                 encoder = "flac";
@@ -65,7 +66,7 @@ namespace GUI
             foreach (string item in items)
             {
                 if (validateFile(encoder, item.ToLower()))
-                    Upload(userKey.Text.Trim(), encoder, commandline, returnOutputExtension(encoder, item), CategoryTxt.Text, item);
+                    Upload(userKey.Text.Trim(), encoder, commandline, returnOutputExtension(encoder, item), category, item);
             }
             MessageBox.Show("File(s) submitted");
         }

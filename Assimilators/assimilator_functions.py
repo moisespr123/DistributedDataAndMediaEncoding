@@ -9,6 +9,7 @@ from database_functions import *
 def generic_wu_basename_select(wu_basename):
     return database_select(wu_basename, "SELECT random_token FROM user_media_files WHERE output_file='%s'")
 
+
 def get_input_filename(random_token):
     return database_select_multi(random_token, "SELECT input_file FROM user_media_files WHERE random_token='%s'")
 
@@ -18,13 +19,15 @@ app_specific_dict = {'ffmpeg_encoder': {'wu_get': generic_wu_basename_select,
                      'flac_encoder': {'wu_get': generic_wu_basename_select,
                                       'assimilator': generic_assimilator, },
                      'mp3packer': {'wu_get': generic_wu_basename_select,
-                                      'assimilator': generic_assimilator, },
+                                   'assimilator': generic_assimilator, },
                      'opus_encoder': {'wu_get': generic_wu_basename_select,
                                       'assimilator': generic_assimilator, },
+                     'paq_compressor': {'wu_get': generic_wu_basename_select,
+                                        'assimilator': generic_assimilator, },
                      'rav1e_encoder': {'wu_get': generic_wu_basename_select,
                                        'assimilator': av1_assimilator, },
                      'svt_av1_encoder': {'wu_get': generic_wu_basename_select,
-                                       'assimilator': av1_assimilator, }
+                                         'assimilator': av1_assimilator, }
                      }
 
 

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -124,6 +120,8 @@ namespace retrieve_files
                     Directory.CreateDirectory(FolderPath);
                     for (int i = 0; i < files.Count; i++)
                     {
+                        filesListBox.SelectedItems.Clear();
+                        filesListBox.SelectedIndex = i;
                         using (WebClient client = new WebClient())
                         {
                             await DownloadFile(userKey.Text, keys[i], FolderPath + "\\" + files[i]);
@@ -176,6 +174,8 @@ namespace retrieve_files
                     Directory.CreateDirectory(FolderPath);
                     for (int i = 0; i < files.Count; i++)
                     {
+                        filesListBox.SelectedItems.Clear();
+                        filesListBox.SelectedIndex = i;
                         using (WebClient client = new WebClient())
                         {
                             await DownloadFile(userKey.Text, keys[i], FolderPath + "\\" + files[i]);
