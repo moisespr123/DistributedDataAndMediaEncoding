@@ -18,5 +18,6 @@ $flac_encoder_file_path = "/path";
 $mp3packer_file_path = "/path";
 $opus_encoder_file_path = "/path";
 $ffmpeg_encoder_file_path = "/path";
+$paq_file_path = "/path";
 
 $other_file_path = "/path";
