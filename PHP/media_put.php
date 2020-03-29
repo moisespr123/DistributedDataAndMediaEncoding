@@ -20,8 +20,9 @@ if (filter_input(INPUT_POST, 'k')) {
         $ext = (new SplFileInfo($_FILES['filedata']['name']))->getExtension();
         $input_file = $random_token . "." . $ext;
         $filenames[] = $input_file;
+        $isset_picture = isset($_FILES["picture"]);
         if (move_uploaded_file($_FILES["filedata"]["tmp_name"], $download_folder . $input_file)) {
-            if (isset($_FILES["picture"])) {
+            if ($isset_picture) {
                 move_uploaded_file($_FILES["picture"]["tmp_name"], $download_folder . $input_file . ".imgfile");
                 $filenames[] = $input_file . ".imgfile";
             }
@@ -38,25 +39,25 @@ if (filter_input(INPUT_POST, 'k')) {
             } else if ($format == "opus") {
                 $filename .= "-out.opus";
                 $app = "opus_encoder";
-                fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
+                fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, $isset_picture));
             } else if ($format == "opus_ffmpeg_libopus") {
                 $filename .= "-out.opus";
                 $app = "ffmpeg_encoder";
-                fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
+                fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, $isset_picture));
             } else if ($format == "flac") {
                 $filename .= "-out.flac";
                 $app = "flac_encoder";
-                fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, isset($_FILES["picture"])));
+                fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, $isset_picture));
             } else if ($format == "paq8px_v185") {
                 $app = "paq8px_v185";
                 $commandLineArgs = filter_input(INPUT_POST, 'c');
                 if ($commandLineArgs == '-d') {
                     $filename = (new SplFileInfo($input_file))->getBasename($ext);
-                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename2, isset($_FILES["picture"])));
+                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename2, $isset_picture));
                 } else {
                     $filename2 = $filename . "-out";
                     $filename = $filename2 . ".paq8px185";
-                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename2, isset($_FILES["picture"])));
+                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename2, $isset_picture));
                 }
             }
             fwrite($result_template, generate_generic_result_template($filename));
@@ -68,7 +69,7 @@ if (filter_input(INPUT_POST, 'k')) {
             $category = "";
             insertUserFile($mysqli, $user_id, $category_hash, filter_input(INPUT_POST, 'a'), $random_token, $input_file, $filename, filter_input(INPUT_POST, 'n'), $app, 1);
             rename($download_folder . $input_file, $move_folder . $input_file);
-            if (isset($_FILES['picture'])) {
+            if ($isset_picture) {
                 rename($download_folder . $input_file . ".imgfile", $move_folder . $input_file . ".imgfile");
             }
             echo "Done";
