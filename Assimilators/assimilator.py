@@ -1,10 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 '''
 Generic Assimilator framework
 '''
 
 import os, re, signal, sys, time, hashlib
-sys.path.append("../py/Boinc")
 import boinc_path_config
 from Boinc import database, boinc_db, boinc_project_path, configxml, sched_messages
 
@@ -30,7 +29,7 @@ class Assimilator():
       3) add the standard if __name__ == "__main__" bootstrap (see end of this file)
     '''
 
-    def __init__(self, appname, pymwDir):
+    def __init__(self, appname):
         # Be sure to call Assimilator.__init__(self) from child classes
         
         # HACK: this belongs in boinc_db.py!
@@ -49,7 +48,6 @@ class Assimilator():
         self.one_pass = False
         self.one_pass_N_WU = 0
         self.appname = appname
-        self.pymwDir = pymwDir
         self.sleep_interval = 10
     
     def check_stop_trigger(self):
@@ -213,7 +211,6 @@ class Assimilator():
         """
         
         args.reverse()
-        self.logNormal(args)
         while(len(args)):
             arg = args.pop()
             if arg == '-sleep_interval':

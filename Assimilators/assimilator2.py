@@ -10,12 +10,13 @@ class PymwAssimilator(Assimilator):
     PyMW Assimilator. Copies workunit results to a predefined output directory.
     """
 
-    def __init__(self, appname, pywmDir):
-        Assimilator.__init__(self, appname, pywmDir)
+    def __init__(self, appname, pymwDir):
+        Assimilator.__init__(self, appname)
         self.MySQLHost = assimilator_config.MySQLHost
         self.MySQLDB = assimilator_config.MySQLDB
         self.MySQLUsername = assimilator_config.MySQLUsername
         self.MySQLPassword = assimilator_config.MySQLPassword
+        self.pymwDir = pymwDir
 
     def _copy_to_output(self, result, error_mask=0):
         # validate that the destination path still exists
@@ -60,7 +61,7 @@ class PymwAssimilator(Assimilator):
                 assimilator_functions.assimilate(self.appname, template_base_name)
 
                 self.logNormal("Result copied [%s]\n", resultName)
-        except Exception, msg:
+        except Exception as msg:
             self.logCritical("Error copying output\n" + \
                              "  - Source: %s\n" + \
                              "  - Dest: %s\n" +
