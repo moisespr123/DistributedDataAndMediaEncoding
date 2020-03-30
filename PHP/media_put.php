@@ -52,12 +52,11 @@ if (filter_input(INPUT_POST, 'k')) {
                 $app = "paq8px_v185";
                 $commandLineArgs = filter_input(INPUT_POST, 'c');
                 if ($commandLineArgs == '-d') {
-                    $filename = (new SplFileInfo($input_file))->getBasename($ext);
-                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename2, $isset_picture));
+                    $filename = (new SplFileInfo($input_file))->getBasename($ext) . "extracted";
+                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename, $isset_picture));
                 } else {
-                    $filename2 = $filename . "-out";
-                    $filename = $filename2 . ".paq8px185";
-                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename2, $isset_picture));
+                    $filename .= "-out.paq8px185";
+                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename, $isset_picture));
                 }
             }
             fwrite($result_template, generate_generic_result_template($filename));
