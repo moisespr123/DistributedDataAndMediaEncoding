@@ -32,25 +32,31 @@ if (filter_input(INPUT_POST, 'k')) {
             $filename = $random_token;
             $wu_template = fopen($random_token . "_wu", "w");
             $result_template = fopen($random_token . "_result", "w");
+            $size_in_mb = "300";
             if ($format == "mp3packer") {
                 $filename .= "-out.mp3";
                 $app = "mp3packer";
+                $size_in_mb = "300";
                 fwrite($wu_template, generate_mp3packer_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename));
             } else if ($format == "opus") {
                 $filename .= "-out.opus";
                 $app = "opus_encoder";
+                $size_in_mb = "500";
                 fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, $isset_picture));
             } else if ($format == "opus_ffmpeg_libopus") {
                 $filename .= "-out.opus";
                 $app = "ffmpeg_encoder";
+                $size_in_mb = "500";
                 fwrite($wu_template, generate_opus_wu_template_with_cmd($app, $input_file, filter_input(INPUT_POST, 'c'), $filename, $isset_picture));
             } else if ($format == "flac") {
                 $filename .= "-out.flac";
                 $app = "flac_encoder";
+                $size_in_mb = "2048";
                 fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, $isset_picture));
             } else if ($format == "paq8px_v185") {
                 $app = "paq8px_v185";
                 $commandLineArgs = filter_input(INPUT_POST, 'c');
+                $size_in_mb = "2048";
                 if ($commandLineArgs == '-d') {
                     $filename = (new SplFileInfo($input_file))->getBasename($ext) . "extracted";
                     fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename, $isset_picture));
@@ -59,13 +65,12 @@ if (filter_input(INPUT_POST, 'k')) {
                     fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename, $isset_picture));
                 }
             }
-            fwrite($result_template, generate_generic_result_template($filename));
+            fwrite($result_template, generate_generic_result_template($filename, $size_in_mb));
             $job_creation_command = return_job_string_multiple_files($app, $random_token, $filenames);
             fclose($wu_template);
             fclose($result_template);
             chdir($root_folder);
             exec($job_creation_command);
-            $category = "";
             insertUserFile($mysqli, $user_id, $category_hash, filter_input(INPUT_POST, 'a'), $random_token, $input_file, $filename, filter_input(INPUT_POST, 'n'), $app, 1);
             rename($download_folder . $input_file, $move_folder . $input_file);
             if ($isset_picture) {

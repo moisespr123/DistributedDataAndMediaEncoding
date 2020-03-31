@@ -79,6 +79,7 @@ if (filter_input(INPUT_POST, 'upload')) {
                         $av1_chunk_filename = $av1_chunk_filename_no_extension . ".y4m";
                         $av1_chunk_output_filename = $av1_chunk_filename_no_extension . "-out.ivf";
                         move($y4m_file, $download_folder . $av1_chunk_filename);
+                        $result_size_in_mb = "1024";
 
                         //av1 workunit creation
                       
@@ -87,7 +88,7 @@ if (filter_input(INPUT_POST, 'upload')) {
                             fwrite($av1_wu_template, generate_av1_wu_template($av1_chunk_filename, $quantizer, $encoder, $av1_chunk_output_filename, false, 0));
                             fclose($av1_wu_template);
                             $av1_result_template = fopen($templates_folder . "/" . $random_token_2 . "_result", "w");
-                            fwrite($av1_result_template, generate_generic_result_template($av1_chunk_output_filename));
+                            fwrite($av1_result_template, generate_generic_result_template($av1_chunk_output_filename, $result_size_in_mb));
                             fclose($av1_result_template);
                             exec(return_job_string($encoder, $random_token_2, $av1_chunk_filename));
                             insertUserFile($mysqli, $user->id, $category_hash, $av1_output_filename, $random_token_2, $av1_chunk_filename, $av1_chunk_output_filename, "Chunk " . strval($counter), $encoder, 4);
@@ -101,7 +102,7 @@ if (filter_input(INPUT_POST, 'upload')) {
                             fwrite($av1_wu_template, generate_av1_wu_template($av1_chunk_filename, $quantizer, $encoder, array($av1_firstpass_output_filename, $av1_chunk_output_filename), true, 1));
                             fclose($av1_wu_template);
                             $av1_result_template = fopen($templates_folder . "/" . $random_token_2 . "_result", "w");
-                            fwrite($av1_result_template, generate_generic_result_template($av1_firstpass_output_filename));
+                            fwrite($av1_result_template, generate_generic_result_template($av1_firstpass_output_filename, $result_size_in_mb));
                             fclose($av1_result_template);
                             
                             // WU template for second pass
@@ -109,7 +110,7 @@ if (filter_input(INPUT_POST, 'upload')) {
                             fwrite($av1_wu_template_2pass, generate_av1_wu_template(array($av1_chunk_filename, $av1_firstpass_output_filename), $quantizer, $encoder, $av1_chunk_output_filename, true, 2));
                             fclose($av1_wu_template_2pass);
                             $av1_result_template_2pass = fopen($templates_folder . "/" . $random_token_twopass . "_result", "w");
-                            fwrite($av1_result_template_2pass, generate_generic_result_template($av1_chunk_output_filename));
+                            fwrite($av1_result_template_2pass, generate_generic_result_template($av1_chunk_output_filename, $result_size_in_mb));
                             fclose($av1_result_template_2pass);
                             
                             // Submit first pass WU

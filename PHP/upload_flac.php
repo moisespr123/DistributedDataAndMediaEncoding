@@ -54,7 +54,7 @@ if (filter_input(INPUT_POST, 'upload')){
                 fwrite($wu_template, generate_flac_wu_template($random_token.".".$ext, $random_token));
                 fclose($wu_template);
                 $result_template = fopen($random_token . "_result", "w");
-                fwrite($result_template, generate_generic_result_template($random_token . "-out.flac"));
+                fwrite($result_template, generate_generic_result_template($random_token . "-out.flac", "2048"));
                 fclose($result_template);
                 chdir($root_folder);
                 exec(return_job_string("flac_encoder", $random_token, $filename));

@@ -100,13 +100,13 @@ function return_wu_template($filename, $command_line, $picture_file, $fpops_est,
     return $workunit_template;
 }
 
-function return_result_template($filename) {
+function return_result_template($filename, $maxSizeInMB) {
     return
             "<file_info>
     <name><OUTFILE_0/></name>
     <generated_locally/>
     <upload_when_present/>
-    <max_nbytes>3000000000</max_nbytes>
+    <max_nbytes>".$maxSizeInMB."000000</max_nbytes>
     <url><UPLOAD_URL/></url>
 </file_info>
 <result>\n
@@ -222,8 +222,8 @@ function generate_ffmpeg_wu_template_with_cmd($random_hash, $cmd, $out, $picture
     return return_wu_template($random_hash, $cmd . " " . $random_hash . " -o " . $out, $picture, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
 
-function generate_generic_result_template($output_filename) {
-    return return_result_template($output_filename);
+function generate_generic_result_template($output_filename, $maxSizeInMB) {
+    return return_result_template($output_filename, $maxSizeInMB);
 }
 
 function generate_opus_wu_template($random_hash, $bitrate, $enc, $out) {

@@ -57,7 +57,7 @@ if (filter_input(INPUT_POST, 'upload')) {
                 fwrite($wu_template, generate_opus_wu_template($filename, filter_input(INPUT_POST, 'bitrate'), $encoder, $random_token));
                 fclose($wu_template);
                 $result_template = fopen($random_token . "_result", "w");
-                fwrite($result_template, generate_generic_result_template($random_token . "-out.opus"));
+                fwrite($result_template, generate_generic_result_template($random_token . "-out.opus", "500"));
                 fclose($result_template);
                 chdir($root_folder);
                 exec(return_job_string($encoder, $random_token, $filename));
