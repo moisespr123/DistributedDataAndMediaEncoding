@@ -106,7 +106,7 @@ function return_result_template($filename) {
     <name><OUTFILE_0/></name>
     <generated_locally/>
     <upload_when_present/>
-    <max_nbytes>300000000</max_nbytes>
+    <max_nbytes>3000000000</max_nbytes>
     <url><UPLOAD_URL/></url>
 </file_info>
 <result>\n
