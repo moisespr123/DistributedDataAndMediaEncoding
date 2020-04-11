@@ -65,18 +65,25 @@ namespace retrieve_files
         private void updateListBoxes()
         {
             string reply = GetFiles(userKey.Text);
-            items = Newtonsoft.Json.JsonConvert.DeserializeObject(reply);
-            categories.Clear();
-            categories.Add("None");
-            foreach (dynamic item in items)
+            try
             {
-                string category = item["category"];
-                if (category != "None")
-                    if (!categories.Any(category.Equals))
-                        categories.Add(category);
+                items = Newtonsoft.Json.JsonConvert.DeserializeObject(reply);
+                categories.Clear();
+                categories.Add("None");
+                foreach (dynamic item in items)
+                {
+                    string category = item["category"];
+                    if (category != "None")
+                        if (!categories.Any(category.Equals))
+                            categories.Add(category);
+                }
+                categoriesListBox.DataSource = null;
+                categoriesListBox.DataSource = categories;
             }
-            categoriesListBox.DataSource = null;
-            categoriesListBox.DataSource = categories;
+            catch
+            {
+                MessageBox.Show("Could not retrieve items.");
+            }
         }
         private void showFilesButton_Click(object sender, EventArgs e)
         {
