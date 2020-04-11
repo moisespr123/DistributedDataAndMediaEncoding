@@ -53,15 +53,16 @@ if (filter_input(INPUT_POST, 'k')) {
                 $app = "flac_encoder";
                 $size_in_mb = "2048";
                 fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, $isset_picture));
-            } else if ($format == "paq8px_v185") {
-                $app = "paq8px_v185";
+            } else if (substr($format, 0, 6) == "paq8px") {
+                $version = trim(substr($format, 8, 10));
+                $app = "paq8px_v" . $version;
                 $commandLineArgs = filter_input(INPUT_POST, 'c');
                 $size_in_mb = "2048";
                 if ($commandLineArgs == '-d') {
                     $filename = (new SplFileInfo($input_file))->getBasename($ext) . "extracted";
                     fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename, $isset_picture));
                 } else {
-                    $filename .= "-out.paq8px185";
+                    $filename .= "-out.paq8px" . $version;
                     fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename, $isset_picture));
                 }
             }
