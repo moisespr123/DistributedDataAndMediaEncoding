@@ -41,7 +41,7 @@ if ($type != 0) {
             } else if ($row['app'] == 'opus_encoder') {
                 $file_path = $opus_encoder_file_path . "downloaded/" . $row['output_file'];
                 rename($opus_encoder_file_path . $result_filename, $file_path);
-            } else if (in_array($row['app'], array('paq8px_v185', 'paq8px_v186', 'paq8px_v186fix1'))) {
+            } else if (substr($row['app'], 0, 6) == "paq8px") {
                 $file_path = $paq_file_path . "downloaded/" . $row['output_file'];
                 rename($paq_file_path . $result_filename, $file_path);
             } else {
