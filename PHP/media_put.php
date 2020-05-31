@@ -54,15 +54,29 @@ if (filter_input(INPUT_POST, 'k')) {
                 $size_in_mb = "2048";
                 fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, $isset_picture));
             } else if (substr($format, 0, 6) == "paq8px") {
-                $version = trim(substr($format, 8, 10));
-                $app = "paq8px_v" . $version;
+                $app = "paq8px";
+                $extension = "paq8px";
+                if (trim(substr($format, 6, 1)) == "d") {
+                    $extension .= "d";
+                    $version = trim(substr($format, 9, 11));
+                    $app .= "d_v" . $version;
+                } else {
+                    $version = trim(substr($format, 8, 10));
+                    $app .= "_v" . $version;
+                }
                 $commandLineArgs = filter_input(INPUT_POST, 'c');
                 $size_in_mb = "2048";
                 if ($commandLineArgs == '-d') {
                     $filename = (new SplFileInfo($input_file))->getBasename($ext) . "extracted";
-                    fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename, $isset_picture));
                 } else {
-                    $filename .= "-out.paq8px" . $version;
+                    if ($extension == "paq8pxd") {
+                        $filename2 = $filename . "-out";
+                    }
+                    $filename .= "-out." . $extension . $version;
+                }
+                if ($extension == "paq8pxd") {
+                    fwrite($wu_template, generate_paq8pxd_wu_template_with_cmd($input_file, $commandLineArgs, $filename2, $isset_picture));
+                } else {
                     fwrite($wu_template, generate_paq8px_wu_template_with_cmd($input_file, $commandLineArgs, $filename, $isset_picture));
                 }
             }

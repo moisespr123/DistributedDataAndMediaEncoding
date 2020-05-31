@@ -216,6 +216,10 @@ function generate_paq8px_wu_template_with_cmd($random_hash, $cmd, $out) {
     global $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
     return return_wu_template($random_hash, $cmd . " " . $random_hash . " " . $out, false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
 }
+function generate_paq8pxd_wu_template_with_cmd($random_hash, $cmd, $out) {
+    global $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
+    return return_wu_template($random_hash, $cmd . " " . $out . " " . $random_hash, false, $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound);
+}
 
 function generate_ffmpeg_wu_template_with_cmd($random_hash, $cmd, $out, $picture) {
     global $rsc_fpops_est, $rsc_fpops_bound, $rsc_memory_bound, $rsc_disk_bound;
