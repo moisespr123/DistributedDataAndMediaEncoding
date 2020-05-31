@@ -39,7 +39,11 @@ namespace GUI
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            string[] items = Directory.GetFiles(PathTxt.Text);
+            string[] items;
+            if (Directory.Exists(PathTxt.Text))
+                items = Directory.GetFiles(PathTxt.Text);
+            else
+                items = new string[] { PathTxt.Text };
             string encoder;
             string commandline;
             string category = CategoryTxt.Text;
@@ -73,7 +77,10 @@ namespace GUI
 
         private void PathTxt_TextChanged(object sender, EventArgs e)
         {
-            if (Directory.Exists(PathTxt.Text)) CategoryTxt.Text = Path.GetFileName(PathTxt.Text);
+            if (Directory.Exists(PathTxt.Text))
+                CategoryTxt.Text = Path.GetFileName(PathTxt.Text);
+            else
+                CategoryTxt.Text = Path.GetFileName(Path.GetDirectoryName(PathTxt.Text));
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
