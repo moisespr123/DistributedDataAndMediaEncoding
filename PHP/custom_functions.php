@@ -189,8 +189,8 @@ function return_job_string($appname, $hash, $filename) {
     return "./bin/create_work -appname " . $appname . " -wu_name " . $appname . "_" . $hash . " -wu_template templates/" . $hash . "_wu -result_template templates/" . $hash . "_result \"" . $filename . "\"";
 }
 
-function return_job_string_multiple_files($appname, $hash, $filenames) {
-    $job_string = "./bin/create_work -appname " . $appname . " -wu_name " . $appname . "_" . $hash . " -wu_template templates/" . $hash . "_wu -result_template templates/" . $hash . "_result ";
+function return_job_string_multiple_files($appname, $hash, $filenames, $deadline) {
+    $job_string = "./bin/create_work -appname " . $appname . " -wu_name " . $appname . "_" . $hash . " -wu_template templates/" . $hash . "_wu -result_template templates/" . $hash . "_result -delay_bound " . strval($deadline * 86400) . " ";
     foreach ($filenames as $file) {
         $job_string .= "\"" . $file . "\" ";
     }

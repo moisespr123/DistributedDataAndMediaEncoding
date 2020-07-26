@@ -33,6 +33,7 @@ if (filter_input(INPUT_POST, 'k')) {
             $wu_template = fopen($random_token . "_wu", "w");
             $result_template = fopen($random_token . "_result", "w");
             $size_in_mb = "300";
+            $deadline = 7;
             if ($format == "mp3packer") {
                 $filename .= "-out.mp3";
                 $app = "mp3packer";
@@ -54,6 +55,7 @@ if (filter_input(INPUT_POST, 'k')) {
                 $size_in_mb = "2048";
                 fwrite($wu_template, generate_flac_wu_template_with_cmd($input_file, filter_input(INPUT_POST, 'c'), $filename, $isset_picture));
             } else if (substr($format, 0, 6) == "paq8px") {
+                $deadline = 60;
                 $app = "paq8px";
                 $extension = "paq8px";
                 if (trim(substr($format, 6, 1)) == "d") {
@@ -81,7 +83,7 @@ if (filter_input(INPUT_POST, 'k')) {
                 }
             }
             fwrite($result_template, generate_generic_result_template($filename, $size_in_mb));
-            $job_creation_command = return_job_string_multiple_files($app, $random_token, $filenames);
+            $job_creation_command = return_job_string_multiple_files($app, $random_token, $filenames, $deadline);
             fclose($wu_template);
             fclose($result_template);
             chdir($root_folder);
