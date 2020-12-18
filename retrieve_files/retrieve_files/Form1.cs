@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,6 +17,7 @@ namespace retrieve_files
         private List<string> categories = new List<string> { };
         private List<string> files = new List<string> { };
         private List<string> keys = new List<string> { };
+        private static string downloadBaseUrl = "https://boinc.moisescardona.me/";
         public Form1()
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace retrieve_files
             {
                 {
                     formData.Add(new StringContent(key), "k");
-                    Uri uri = new Uri("http://boinc.moisescardona.me/data_retriever_get_files.php");
+                    Uri uri = new Uri(downloadBaseUrl + "data_retriever_get_files.php");
                     HttpResponseMessage response = client.PostAsync(uri, formData).Result;
                     if (!response.IsSuccessStatusCode)
                     {
@@ -48,7 +50,8 @@ namespace retrieve_files
                 {
                     formData.Add(new StringContent(key), "k");
                     formData.Add(new StringContent(filekey), "f");
-                    Uri uri = new Uri("http://boinc.moisescardona.me/download_file.php");
+                    Uri uri = new Uri(downloadBaseUrl + "download_file.php");
+                    client.Timeout = Timeout.InfiniteTimeSpan;
                     HttpResponseMessage response = client.PostAsync(uri, formData).Result;
                     if (!response.IsSuccessStatusCode)
                     {
@@ -176,7 +179,7 @@ namespace retrieve_files
                     string FolderPath = downloadPath.Text;
                     if (categories[j] != "None")
                     {
-                        FolderPath += "\\" + categories[j].Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
+                        FolderPath += "\\" + categories[j].Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('\"', '_').Replace('?', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_').Trim();
                     }
                     Directory.CreateDirectory(FolderPath);
                     for (int i = 0; i < files.Count; i++)
@@ -227,6 +230,11 @@ namespace retrieve_files
             DialogResult result = folderBrowserDialog1.ShowDialog();
             if (result == DialogResult.OK)
                 downloadPath.Text = folderBrowserDialog1.SelectedPath;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

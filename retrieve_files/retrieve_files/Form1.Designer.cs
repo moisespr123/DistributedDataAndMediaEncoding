@@ -47,6 +47,7 @@
             this.browseBtn = new System.Windows.Forms.Button();
             this.downloadPath = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -67,7 +68,7 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(716, 571);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(716, 610);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // panel1
@@ -80,14 +81,15 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(352, 565);
+            this.panel1.Size = new System.Drawing.Size(352, 604);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // downloadAllBtn
             // 
             this.downloadAllBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.downloadAllBtn.Location = new System.Drawing.Point(220, 508);
+            this.downloadAllBtn.Location = new System.Drawing.Point(220, 547);
             this.downloadAllBtn.Name = "downloadAllBtn";
             this.downloadAllBtn.Size = new System.Drawing.Size(129, 23);
             this.downloadAllBtn.TabIndex = 5;
@@ -97,8 +99,9 @@
             // 
             // checkBox1
             // 
+            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 575);
+            this.checkBox1.Location = new System.Drawing.Point(6, 578);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(164, 17);
             this.checkBox1.TabIndex = 4;
@@ -109,7 +112,7 @@
             // 
             this.downloadAll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.downloadAll.Location = new System.Drawing.Point(6, 508);
+            this.downloadAll.Location = new System.Drawing.Point(6, 547);
             this.downloadAll.Name = "downloadAll";
             this.downloadAll.Size = new System.Drawing.Size(208, 23);
             this.downloadAll.TabIndex = 2;
@@ -125,7 +128,7 @@
             this.categoriesListBox.FormattingEnabled = true;
             this.categoriesListBox.Location = new System.Drawing.Point(6, 16);
             this.categoriesListBox.Name = "categoriesListBox";
-            this.categoriesListBox.Size = new System.Drawing.Size(343, 485);
+            this.categoriesListBox.Size = new System.Drawing.Size(343, 524);
             this.categoriesListBox.TabIndex = 1;
             this.categoriesListBox.SelectedIndexChanged += new System.EventHandler(this.categoriesListBox_SelectedIndexChanged);
             // 
@@ -140,20 +143,21 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.downloadSelected);
             this.panel2.Controls.Add(this.filesListBox);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(361, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(352, 565);
+            this.panel2.Size = new System.Drawing.Size(352, 604);
             this.panel2.TabIndex = 1;
             // 
             // downloadSelected
             // 
             this.downloadSelected.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.downloadSelected.Location = new System.Drawing.Point(3, 508);
+            this.downloadSelected.Location = new System.Drawing.Point(3, 547);
             this.downloadSelected.Name = "downloadSelected";
             this.downloadSelected.Size = new System.Drawing.Size(343, 23);
             this.downloadSelected.TabIndex = 5;
@@ -170,7 +174,7 @@
             this.filesListBox.Location = new System.Drawing.Point(3, 16);
             this.filesListBox.Name = "filesListBox";
             this.filesListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.filesListBox.Size = new System.Drawing.Size(343, 485);
+            this.filesListBox.Size = new System.Drawing.Size(343, 524);
             this.filesListBox.TabIndex = 4;
             // 
             // label3
@@ -252,10 +256,20 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "Download path:";
             // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(221, 582);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(125, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "v0.1. By Moisés Cardona";
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(740, 688);
+            this.ClientSize = new System.Drawing.Size(740, 727);
             this.Controls.Add(this.browseBtn);
             this.Controls.Add(this.downloadPath);
             this.Controls.Add(this.label4);
@@ -297,6 +311,7 @@
         private System.Windows.Forms.Button browseBtn;
         private System.Windows.Forms.TextBox downloadPath;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 
