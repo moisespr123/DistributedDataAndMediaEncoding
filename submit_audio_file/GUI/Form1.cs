@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 
 
 namespace GUI
@@ -106,7 +107,8 @@ namespace GUI
                     formData.Add(new StringContent(format), "f");
                     formData.Add(new StringContent(commandline.Replace('\'', '`')), "c");
                     formData.Add(new StringContent(filename), "n");
-                    Uri uri = new Uri("http://boinc.moisescardona.me/media_put.php");
+                    Uri uri = new Uri("https://boinc.moisescardona.me/media_put.php");
+                    client.Timeout = Timeout.InfiniteTimeSpan;
                     client.DefaultRequestHeaders.Add("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6,ru;q=0.4");
                     HttpResponseMessage response = client.PostAsync(uri, formData).Result;
                     if (!response.IsSuccessStatusCode)
