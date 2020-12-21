@@ -10,9 +10,12 @@ namespace GUI
 {
     public partial class Form1 : Form
     {
+        private static string serverUrl = "https://boinc.moisescardona.me";
         public Form1()
         {
             InitializeComponent();
+            if (Properties.Settings.Default.localServer)
+                serverUrl = "http://127.0.0.1/test_server";
         }
 
 
@@ -107,7 +110,7 @@ namespace GUI
                     formData.Add(new StringContent(format), "f");
                     formData.Add(new StringContent(commandline.Replace('\'', '`')), "c");
                     formData.Add(new StringContent(filename), "n");
-                    Uri uri = new Uri("https://boinc.moisescardona.me/media_put.php");
+                    Uri uri = new Uri(serverUrl + "/media_put.php");
                     client.Timeout = Timeout.InfiniteTimeSpan;
                     client.DefaultRequestHeaders.Add("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6,ru;q=0.4");
                     HttpResponseMessage response = client.PostAsync(uri, formData).Result;

@@ -20,5 +20,8 @@
     <Setting Name="Bitrate" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">64</Value>
     </Setting>
+    <Setting Name="localServer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
