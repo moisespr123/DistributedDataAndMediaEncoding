@@ -21,6 +21,8 @@ namespace retrieve_files
         public Form1()
         {
             InitializeComponent();
+            if (Properties.Settings.Default.localServer)
+                downloadBaseUrl = "http://127.0.0.1/test_server/";
         }
         private static string GetFiles(string key)
         {
