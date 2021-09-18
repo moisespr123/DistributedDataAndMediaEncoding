@@ -18,6 +18,7 @@ namespace retrieve_files
         private List<string> files = new List<string> { };
         private List<string> keys = new List<string> { };
         private static string downloadBaseUrl = "https://boinc.moisescardona.me/";
+        private bool downloading = false;
         public Form1()
         {
             InitializeComponent();
@@ -120,10 +121,16 @@ namespace retrieve_files
 
         private async void downloadAll_Click(object sender, EventArgs e)
         {
+            if (downloading)
+            {
+                MessageBox.Show("File downloads are in progress. Please wait until it finishes.");
+                return;
+            }
             if (categoriesListBox.SelectedIndex >= 0)
             {
                 if (!String.IsNullOrWhiteSpace(downloadPath.Text))
                 {
+                    downloading = true;
                     string FolderPath = downloadPath.Text;
                     if (categoriesListBox.SelectedItem.ToString() != "None" && !checkBox1.Checked)
                     {
@@ -139,6 +146,7 @@ namespace retrieve_files
                             await DownloadFile(userKey.Text, keys[i], FolderPath + "\\" + files[i]);
                         }
                     }
+                    downloading = false;
                     MessageBox.Show("Downloads completed!");
                     updateListBoxes();
                 }
@@ -148,10 +156,16 @@ namespace retrieve_files
 
         private async void downloadSelected_Click(object sender, EventArgs e)
         {
+            if (downloading)
+            {
+                MessageBox.Show("File downloads are in progress. Please wait until it finishes.");
+                return;
+            }
             if (categoriesListBox.SelectedIndex >= 0)
             {
                 if (!String.IsNullOrWhiteSpace(downloadPath.Text))
                 {
+                    downloading = true;
                     string FolderPath = downloadPath.Text;
                     if (categoriesListBox.SelectedItem.ToString() != "None" && !checkBox1.Checked)
                     {
@@ -165,6 +179,7 @@ namespace retrieve_files
                             await DownloadFile(userKey.Text, keys[index], FolderPath + "\\" + files[index]);
                         }
                     }
+                    downloading = false;
                     MessageBox.Show("Downloads completed!");
                     updateListBoxes();
                 }
@@ -173,8 +188,14 @@ namespace retrieve_files
 
         private async void downloadAllBtn_Click(object sender, EventArgs e)
         {
+            if (downloading)
+            {
+                MessageBox.Show("File downloads are in progress. Please wait until it finishes.");
+                return;
+            }
             if (!String.IsNullOrWhiteSpace(downloadPath.Text))
             {
+                downloading = true;
                 for (int j = 0; j < categories.Count; j++)
                 {
                     categoriesListBox.SelectedIndex = j;
@@ -193,8 +214,8 @@ namespace retrieve_files
                             await DownloadFile(userKey.Text, keys[i], FolderPath + "\\" + files[i]);
                         }
                     }
-
                 }
+                downloading = false;
                 MessageBox.Show("Downloads completed!");
                 updateListBoxes();
             }
