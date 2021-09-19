@@ -93,6 +93,11 @@ namespace retrieve_files
         }
         private void showFilesButton_Click(object sender, EventArgs e)
         {
+            if (downloading)
+            {
+                MessageBox.Show("File downloads are in progress. Please wait until it finishes.");
+                return;
+            }
             updateListBoxes();
         }
 
